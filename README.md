@@ -26,4 +26,4 @@ Este projeto é um "monorepo" lógico, dividido em duas pastas principais:
 Para instruções detalhadas sobre como configurar e executar cada parte da aplicação, por favor, consulte os ficheiros `README.md` dentro de cada subpasta:
 
 1.  [**Instruções do Backend**](./zenith-backend/README.md)
-2.  [**Instruções do Frontend**](./zenith-frontend/README.md)****
+2.  [**Instruções do Frontend**](./zenith-frontend/README.md)
