@@ -1,0 +1,42 @@
+#Ficheiros de Log
+
+*.log
+logs/
+
+#Ficheiros de Build (Maven e Gradle)
+
+target/
+build/
+out/
+
+#Artefactos Gerados
+
+*.jar
+*.war
+*.ear
+
+#Dependências de Wrapper (Maven e Gradle)
+
+.mvn/
+.gradle/
+
+#Ficheiros de IDE (IntelliJ, Eclipse, VSCode)
+
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+#Ficheiros de Sistema Operacional
+
+.DS_Store
+Thumbs.db
+
+#Ficheiros de ambiente
+
+.env
+application.properties
