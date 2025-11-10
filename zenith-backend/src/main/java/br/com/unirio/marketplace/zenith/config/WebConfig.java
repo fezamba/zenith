@@ -6,10 +6,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Permite CORS apenas para os nossos endpoints da API
+        registry.addMapping("/api/**")
                 .allowedOrigins(
                         // FIXME: Alterar depois, não sei o que o pessoal vai usar no front-end.
                         "http://localhost:4200", // Porta Angular
