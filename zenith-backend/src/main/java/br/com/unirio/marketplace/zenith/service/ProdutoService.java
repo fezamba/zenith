@@ -1,15 +1,18 @@
 package br.com.unirio.marketplace.zenith.service;
 
+import br.com.unirio.marketplace.zenith.dto.CategoriaDTO;
+import br.com.unirio.marketplace.zenith.dto.ProdutoDTO;
 import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException;
-import br.com.unirio.marketplace.zenith.model.Categoria;
 import br.com.unirio.marketplace.zenith.model.Produto;
 import br.com.unirio.marketplace.zenith.repository.CategoriaRepository;
 import br.com.unirio.marketplace.zenith.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
+@Service 
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
@@ -20,26 +23,42 @@ public class ProdutoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-
-    public List<Produto> listarTodosProdutos() {
-        return produtoRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<ProdutoDTO> listarTodosProdutos() {
+        return produtoRepository.findAll()
+                .stream()
+                .map(ProdutoDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public Produto buscarProdutoPorId(Integer id) {
+    @Transactional(readOnly = true)
+    public ProdutoDTO buscarProdutoPorId(Integer id) {
         return produtoRepository.findById(id)
+                .map(ProdutoDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto com ID " + id + " não encontrado."));
     }
 
-    public List<Produto> listarProdutosPorCategoria(Integer categoriaId) {
+    @Transactional(readOnly = true)
+    public List<ProdutoDTO> listarProdutosPorCategoria(Integer categoriaId) {
         if (!categoriaRepository.existsById(categoriaId)) {
             throw new ResourceNotFoundException("Categoria com ID " + categoriaId + " não encontrada.");
         }
-        return produtoRepository.findByCategoriaId(categoriaId);
+        return produtoRepository.findByCategoriaId(categoriaId)
+                .stream()
+                .map(ProdutoDTO::new)
+                .collect(Collectors.toList());
     }
     
-    public List<Categoria> listarCategorias() {
-        return categoriaRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<CategoriaDTO> listarCategorias() {
+        return categoriaRepository.findAll()
+                .stream()
+                .map(CategoriaDTO::new)
+                .collect(Collectors.toList());
     }
 
-   //FIXME: Falta adicionar os metodos do Vendedor/Admin (criarProduto, atualizarProduto...)
+    public Produto findProdutoByIdInterno(Integer id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto com ID " + id + " não encontrado."));
+    }
 }
