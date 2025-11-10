@@ -9,7 +9,7 @@ O Zenith conecta Clientes, Vendedores e Administradores. A plataforma utiliza um
 ### Stack Tecnológica
 
 * **Backend:** Java com Spring Boot
-* **Banco de Dados (Híbrido):**
+* **Banco de Dados:**
     * **MySQL:** Para dados transacionais (utilizadores, produtos, pedidos).
     * **MongoDB:** Para dados voláteis e documentos (carrinhos, avaliações, logs).
 * **Frontend:** Aplicação web moderna utilizando <framework>
