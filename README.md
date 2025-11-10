@@ -12,7 +12,7 @@ O Zenith conecta Clientes, Vendedores e Administradores. A plataforma utiliza um
 * **Banco de Dados (Híbrido):**
     * **MySQL:** Para dados transacionais (utilizadores, produtos, pedidos).
     * **MongoDB:** Para dados voláteis e documentos (carrinhos, avaliações, logs).
-* **Frontend:** Aplicação web moderna utilizando Angular
+* **Frontend:** Aplicação web moderna utilizando <framework>
 
 ## Estrutura do Repositório
 
