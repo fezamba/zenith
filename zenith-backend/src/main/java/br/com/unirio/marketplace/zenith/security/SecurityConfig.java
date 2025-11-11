@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -38,10 +40,15 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            
+            .cors(withDefaults()) 
+            
             .authorizeHttpRequests(authorize -> authorize
+                // Endpoints Públicos
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
                 
+                // Endpoints Privados (agora o filtro JWT vai validá-los)
                 .requestMatchers("/api/carrinho/**").authenticated()
                 .requestMatchers("/api/pedidos/**").authenticated()
                 
