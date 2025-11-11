@@ -33,7 +33,7 @@ public class AuthController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/registar")
+    @PostMapping("/registrar")
     public ResponseEntity<ClienteDTO> registarCliente(@Valid @RequestBody RegistroDTO registroDTO) {
         Cliente cliente = usuarioService.registarCliente(registroDTO);
         ClienteDTO clienteDTO = new ClienteDTO(cliente);

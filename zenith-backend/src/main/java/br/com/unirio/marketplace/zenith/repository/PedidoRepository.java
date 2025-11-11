@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     
-    List<Pedido> findByClienteUsuarioId(Integer clienteId);
+    List<Pedido> findByClienteId(Integer clienteId);
 }

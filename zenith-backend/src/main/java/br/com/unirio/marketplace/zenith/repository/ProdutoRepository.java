@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    List<Produto> findByVendedorUsuarioId(Integer vendedorId);
+    List<Produto> findByVendedorId(Integer vendedorId);
 
     List<Produto> findByCategoriaId(Integer categoriaId);
 
