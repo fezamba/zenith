@@ -5,6 +5,7 @@ import br.com.unirio.marketplace.zenith.dto.LoginDTO;
 import br.com.unirio.marketplace.zenith.dto.RegistroDTO;
 import br.com.unirio.marketplace.zenith.dto.TokenDTO;
 import br.com.unirio.marketplace.zenith.model.Cliente;
+import br.com.unirio.marketplace.zenith.security.TokenService;
 import br.com.unirio.marketplace.zenith.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,18 +25,18 @@ public class AuthController {
 
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthController(UsuarioService usuarioService, AuthenticationManager authenticationManager) {
+    public AuthController(UsuarioService usuarioService, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.usuarioService = usuarioService;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/registar")
     public ResponseEntity<ClienteDTO> registarCliente(@Valid @RequestBody RegistroDTO registroDTO) {
         Cliente cliente = usuarioService.registarCliente(registroDTO);
-        
         ClienteDTO clienteDTO = new ClienteDTO(cliente);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteDTO);
     }
 
@@ -51,11 +52,9 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // FIXME: GERAÇÃO DO TOKEN JWT NAO FOI IMPLEMENTADA
-
-        String tokenJwtFalso = "token_jwt_falso_implementar_depois"; 
+        String tokenJwt = tokenService.gerarToken(authentication);
         
-        TokenDTO tokenDTO = new TokenDTO(loginDTO.getEmail(), tokenJwtFalso);
+        TokenDTO tokenDTO = new TokenDTO(loginDTO.getEmail(), tokenJwt);
         
         return ResponseEntity.ok(tokenDTO);
     }
