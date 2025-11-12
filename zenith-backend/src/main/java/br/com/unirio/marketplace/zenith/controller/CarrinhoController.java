@@ -2,9 +2,11 @@ package br.com.unirio.marketplace.zenith.controller;
 
 import br.com.unirio.marketplace.zenith.dto.CarrinhoDTO;
 import br.com.unirio.marketplace.zenith.dto.ItemCarrinhoInputDTO;
+import br.com.unirio.marketplace.zenith.security.UserDetailsImpl;
 import br.com.unirio.marketplace.zenith.service.CarrinhoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,18 +19,21 @@ public class CarrinhoController {
         this.carrinhoService = carrinhoService;
     }
 
-    @GetMapping("/{usuarioId}")
-    public ResponseEntity<CarrinhoDTO> buscarCarrinho(@PathVariable Integer usuarioId) {
-        // FIXME: O 'usuarioId' viria da autenticação (Spring Security). Por agora, passei na URL para testar.
+    @GetMapping
+    public ResponseEntity<CarrinhoDTO> buscarCarrinho(Authentication authentication) {
+        Integer usuarioId = getUsuarioIdDoToken(authentication);
+        
         CarrinhoDTO carrinho = carrinhoService.buscarCarrinho(usuarioId);
         return ResponseEntity.ok(carrinho);
     }
 
-    @PostMapping("/adicionar/{usuarioId}")
+    @PostMapping("/adicionar")
     public ResponseEntity<CarrinhoDTO> adicionarAoCarrinho(
-            @PathVariable Integer usuarioId,
+            Authentication authentication,
             @Valid @RequestBody ItemCarrinhoInputDTO itemDTO) {
         
+        Integer usuarioId = getUsuarioIdDoToken(authentication);
+
         CarrinhoDTO carrinhoAtualizado = carrinhoService.adicionarAoCarrinho(
                 usuarioId,
                 itemDTO.getProdutoId(),
@@ -37,5 +42,12 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinhoAtualizado);
     }
 
-    //FIXME: Adicionar outros endpoints (remover, atualizar...)
+    private Integer getUsuarioIdDoToken(Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDetailsImpl)) {
+            throw new SecurityException("Autenticação inválida ou não encontrada."); 
+        }
+        
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return userDetails.getId(); 
+    }
 }

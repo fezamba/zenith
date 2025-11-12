@@ -44,11 +44,9 @@ public class SecurityConfig {
             .cors(withDefaults()) 
             
             .authorizeHttpRequests(authorize -> authorize
-                // Endpoints Públicos
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
                 
-                // Endpoints Privados (agora o filtro JWT vai validá-los)
                 .requestMatchers("/api/carrinho/**").authenticated()
                 .requestMatchers("/api/pedidos/**").authenticated()
                 

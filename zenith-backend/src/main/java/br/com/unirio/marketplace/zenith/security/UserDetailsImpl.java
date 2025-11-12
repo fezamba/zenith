@@ -10,15 +10,20 @@ import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
+    private Integer id;
     private String email;
     private String senhaHash;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Usuario usuario) {
+        this.id = usuario.getId();
         this.email = usuario.getEmail();
         this.senhaHash = usuario.getSenhaHash();
-        
         this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getTipoUsuario()));
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override
