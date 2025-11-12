@@ -22,17 +22,15 @@ import java.util.stream.Collectors;
 public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
-    private final ItemPedidoRepository itemPedidoRepository;
     private final CarrinhoRepository carrinhoRepository;
     private final ProdutoRepository produtoRepository;
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, ItemPedidoRepository itemPedidoRepository,
-                         CarrinhoRepository carrinhoRepository, ProdutoRepository produtoRepository,
-                         ClienteRepository clienteRepository, EnderecoRepository enderecoRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, CarrinhoRepository carrinhoRepository, 
+                        ProdutoRepository produtoRepository, ClienteRepository clienteRepository, 
+                        EnderecoRepository enderecoRepository) {
         this.pedidoRepository = pedidoRepository;
-        this.itemPedidoRepository = itemPedidoRepository;
         this.carrinhoRepository = carrinhoRepository;
         this.produtoRepository = produtoRepository;
         this.clienteRepository = clienteRepository;
