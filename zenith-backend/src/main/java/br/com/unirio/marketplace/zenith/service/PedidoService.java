@@ -1,6 +1,7 @@
 package br.com.unirio.marketplace.zenith.service;
 
 import br.com.unirio.marketplace.zenith.dto.PedidoDTO;
+import br.com.unirio.marketplace.zenith.dto.PedidoInputDTO;
 import br.com.unirio.marketplace.zenith.exception.EstoqueInsuficienteException;
 import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException;
 import br.com.unirio.marketplace.zenith.model.*;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +39,12 @@ public class PedidoService {
     }
 
     @Transactional
-    public PedidoDTO criarPedido(Integer usuarioId, Integer enderecoId) {
+    public PedidoDTO criarPedido(Integer usuarioId, PedidoInputDTO pedidoInputDTO) {
+        
         Cliente cliente = clienteRepository.findById(usuarioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
 
-        Endereco endereco = enderecoRepository.findById(enderecoId)
+        Endereco endereco = enderecoRepository.findById(pedidoInputDTO.getEnderecoId())
                 .orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado."));
 
         if (!endereco.getCliente().getId().equals(usuarioId)) {
@@ -86,6 +89,29 @@ public class PedidoService {
             itemPedido.setPrecoUnitario(precoItem);
             
             itensDoPedido.add(itemPedido);
+        }
+
+        if (Boolean.TRUE.equals(pedidoInputDTO.getUsarZenithPoints()) && cliente.getZenithPoints() > 0) {
+            
+            BigDecimal taxaConversao = new BigDecimal("0.01"); 
+
+            BigDecimal descontoMaximo = BigDecimal.valueOf(cliente.getZenithPoints()).multiply(taxaConversao);
+            BigDecimal descontoAplicado;
+
+            if (descontoMaximo.compareTo(valorTotal) >= 0) {
+                descontoAplicado = valorTotal;
+                
+                int pontosUsados = valorTotal.divide(taxaConversao, 0, RoundingMode.CEILING).intValue();
+                cliente.setZenithPoints(cliente.getZenithPoints() - pontosUsados);
+                
+            } else {
+                descontoAplicado = descontoMaximo;
+                cliente.setZenithPoints(0);
+            }
+
+            valorTotal = valorTotal.subtract(descontoAplicado);
+            
+            clienteRepository.save(cliente);
         }
 
         pedido.setValorTotal(valorTotal);

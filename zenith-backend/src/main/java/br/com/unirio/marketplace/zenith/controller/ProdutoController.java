@@ -6,6 +6,7 @@ import br.com.unirio.marketplace.zenith.service.ProdutoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,12 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> listarTodos() {
-        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos();
+    public ResponseEntity<List<ProdutoDTO>> listarTodos(
+            @RequestParam(required = false) BigDecimal precoMin,
+            @RequestParam(required = false) BigDecimal precoMax,
+            @RequestParam(required = false) String statusSelo
+    ) {
+        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos(precoMin, precoMax, statusSelo);
         return ResponseEntity.ok(produtos);
     }
 

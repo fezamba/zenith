@@ -8,4 +8,6 @@ public class PedidoInputDTO {
     
     @NotNull(message = "O ID do endereço de entrega é obrigatório")
     private Integer enderecoId;
+
+    private Boolean usarZenithPoints = false;
 }

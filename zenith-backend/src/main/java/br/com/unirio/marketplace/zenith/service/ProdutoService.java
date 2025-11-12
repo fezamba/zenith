@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.Predicate;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 @Service 
 public class ProdutoService {
 
@@ -24,8 +29,25 @@ public class ProdutoService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProdutoDTO> listarTodosProdutos() {
-        return produtoRepository.findAll()
+    public List<ProdutoDTO> listarTodosProdutos(BigDecimal precoMin, BigDecimal precoMax, String statusSelo) {
+        
+        Specification<Produto> spec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (precoMin != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("preco"), precoMin));
+            }
+            if (precoMax != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("preco"), precoMax));
+            }
+            if (statusSelo != null && !statusSelo.isBlank()) {
+                predicates.add(criteriaBuilder.equal(root.get("statusSelo"), statusSelo.toUpperCase()));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+
+        return produtoRepository.findAll(spec)
                 .stream()
                 .map(ProdutoDTO::new)
                 .collect(Collectors.toList());

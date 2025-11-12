@@ -30,10 +30,9 @@ public class PedidoController {
         
         Integer clienteId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
 
-        // Cria o pedido
         PedidoDTO pedidoCriado = pedidoService.criarPedido(
                 clienteId,
-                pedidoInputDTO.getEnderecoId()
+                pedidoInputDTO
         );
         
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoCriado);
