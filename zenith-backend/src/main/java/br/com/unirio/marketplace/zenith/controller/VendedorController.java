@@ -1,9 +1,12 @@
 package br.com.unirio.marketplace.zenith.controller;
 
+import br.com.unirio.marketplace.zenith.dto.AtualizarStatusPedidoDTO;
+import br.com.unirio.marketplace.zenith.dto.PedidoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoInputDTO;
 import br.com.unirio.marketplace.zenith.security.UserDetailsImpl;
 import br.com.unirio.marketplace.zenith.service.ProdutoService;
+import br.com.unirio.marketplace.zenith.service.PedidoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,11 @@ import java.util.List;
 public class VendedorController {
 
     private final ProdutoService produtoService;
+    private final PedidoService pedidoService;
 
-    public VendedorController(ProdutoService produtoService) {
+    public VendedorController(ProdutoService produtoService, PedidoService pedidoService) {
         this.produtoService = produtoService;
+        this.pedidoService = pedidoService;
     }
 
     @GetMapping("/produtos")
@@ -51,9 +56,26 @@ public class VendedorController {
                                                  @PathVariable Integer id) {
         Integer vendedorId = getVendedorIdDoToken(authentication);
         produtoService.desativarProduto(vendedorId, id);
-        return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/pedidos")
+    public ResponseEntity<List<PedidoDTO>> listarMeusPedidos(Authentication authentication) {
+        Integer vendedorId = getVendedorIdDoToken(authentication);
+        List<PedidoDTO> pedidos = pedidoService.listarPedidosPorVendedor(vendedorId);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @PatchMapping("/pedidos/{id}/status")
+    public ResponseEntity<PedidoDTO> atualizarStatusPedido(
+            Authentication authentication,
+            @PathVariable Integer id,
+            @Valid @RequestBody AtualizarStatusPedidoDTO statusDTO) {
+        
+        Integer vendedorId = getVendedorIdDoToken(authentication);
+        PedidoDTO pedidoAtualizado = pedidoService.atualizarStatusPedido(vendedorId, id, statusDTO.getNovoStatus());
+        return ResponseEntity.ok(pedidoAtualizado);
+    }
 
     private Integer getVendedorIdDoToken(Authentication authentication) {
         if (authentication == null || !(authentication.getPrincipal() instanceof UserDetailsImpl)) {

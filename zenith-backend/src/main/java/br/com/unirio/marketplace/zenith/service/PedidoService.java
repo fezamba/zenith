@@ -16,6 +16,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -119,6 +120,27 @@ public class PedidoService {
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido); 
         carrinhoRepository.delete(carrinho);
+
+        return new PedidoDTO(pedidoSalvo);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PedidoDTO> listarPedidosPorVendedor(Integer vendedorId) {
+        List<Pedido> pedidos = pedidoRepository.findPedidosByVendedorId(vendedorId);
+        
+        return pedidos.stream()
+                .map(PedidoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public PedidoDTO atualizarStatusPedido(Integer vendedorId, Integer pedidoId, String novoStatus) {
+        
+        Pedido pedido = pedidoRepository.findPedidoByIdAndVendedorId(pedidoId, vendedorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado ou não pertence a este vendedor."));
+        
+        pedido.setStatus(novoStatus);
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
         return new PedidoDTO(pedidoSalvo);
     }
