@@ -38,9 +38,9 @@ public class AvaliacaoController {
         
         return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoCriada);
     }
+
     @GetMapping("/produto/{produtoId}")
     public ResponseEntity<AvaliacaoStatsDTO> buscarAvaliacoesPorProduto(@PathVariable Integer produtoId) {
-        
         AvaliacaoStatsDTO stats = avaliacaoService.buscarAvaliacoesPorProduto(produtoId);
         return ResponseEntity.ok(stats);
     }

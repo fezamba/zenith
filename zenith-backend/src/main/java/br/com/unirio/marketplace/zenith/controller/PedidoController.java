@@ -28,10 +28,11 @@ public class PedidoController {
             Authentication authentication,
             @Valid @RequestBody PedidoInputDTO pedidoInputDTO) {
         
-        Integer usuarioId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
+        Integer clienteId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
 
+        // Cria o pedido
         PedidoDTO pedidoCriado = pedidoService.criarPedido(
-                usuarioId,
+                clienteId,
                 pedidoInputDTO.getEnderecoId()
         );
         
