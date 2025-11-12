@@ -43,4 +43,8 @@ public class Produto {
 
     @Column(name = "status", nullable = false)
     private String status;
+
+    @Lob
+    @Column(name = "justificativa_selo")
+    private String justificativaSelo;
 }

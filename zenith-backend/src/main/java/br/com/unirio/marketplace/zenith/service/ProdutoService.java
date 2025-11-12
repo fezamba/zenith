@@ -3,6 +3,7 @@ package br.com.unirio.marketplace.zenith.service;
 import br.com.unirio.marketplace.zenith.dto.CategoriaDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoInputDTO;
+import br.com.unirio.marketplace.zenith.dto.SolicitarSeloDTO;
 import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException;
 import br.com.unirio.marketplace.zenith.model.Categoria;
 import br.com.unirio.marketplace.zenith.model.Produto;
@@ -169,7 +170,23 @@ public class ProdutoService {
         produtoRepository.save(produto);
     }
 
-    
+    @Transactional
+    public ProdutoDTO solicitarSelo(Integer vendedorId, Integer produtoId, SolicitarSeloDTO dto) {
+        
+        Produto produto = validarDonoProduto(vendedorId, produtoId);
+
+        if ("PENDENTE".equals(produto.getStatusSelo()) || "APROVADO".equals(produto.getStatusSelo())) {
+            throw new SecurityException("Este produto já possui um selo aprovado ou uma solicitação pendente.");
+        }
+
+        produto.setStatusSelo("PENDENTE");
+        produto.setJustificativaSelo(dto.getJustificativa());
+
+        Produto produtoSalvo = produtoRepository.save(produto);
+
+        return new ProdutoDTO(produtoSalvo);
+    }
+
     private Produto validarDonoProduto(Integer vendedorId, Integer produtoId) {
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto com ID " + produtoId + " não encontrado."));

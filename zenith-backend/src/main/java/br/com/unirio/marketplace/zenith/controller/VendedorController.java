@@ -4,6 +4,7 @@ import br.com.unirio.marketplace.zenith.dto.AtualizarStatusPedidoDTO;
 import br.com.unirio.marketplace.zenith.dto.PedidoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoInputDTO;
+import br.com.unirio.marketplace.zenith.dto.SolicitarSeloDTO;
 import br.com.unirio.marketplace.zenith.security.UserDetailsImpl;
 import br.com.unirio.marketplace.zenith.service.ProdutoService;
 import br.com.unirio.marketplace.zenith.service.PedidoService;
@@ -75,6 +76,17 @@ public class VendedorController {
         Integer vendedorId = getVendedorIdDoToken(authentication);
         PedidoDTO pedidoAtualizado = pedidoService.atualizarStatusPedido(vendedorId, id, statusDTO.getNovoStatus());
         return ResponseEntity.ok(pedidoAtualizado);
+    }
+
+    @PostMapping("/produtos/{id}/solicitar-selo")
+    public ResponseEntity<ProdutoDTO> solicitarSelo(
+            Authentication authentication,
+            @PathVariable Integer id,
+            @Valid @RequestBody SolicitarSeloDTO solicitarSeloDTO) {
+        
+        Integer vendedorId = getVendedorIdDoToken(authentication);
+        ProdutoDTO produtoAtualizado = produtoService.solicitarSelo(vendedorId, id, solicitarSeloDTO);
+        return ResponseEntity.ok(produtoAtualizado);
     }
 
     private Integer getVendedorIdDoToken(Authentication authentication) {
