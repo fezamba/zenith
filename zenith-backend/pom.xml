@@ -82,7 +82,6 @@
         </dependency>
 
         <!-- 09. SPRING DOC-->
-
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

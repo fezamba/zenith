@@ -28,7 +28,7 @@ public class Produto {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Lob // Define que pode ser um texto longo
+    @Lob
     @Column(name = "descricao")
     private String descricao;
 
@@ -40,4 +40,7 @@ public class Produto {
 
     @Column(name = "status_selo")
     private String statusSelo;
+
+    @Column(name = "status", nullable = false)
+    private String status;
 }
