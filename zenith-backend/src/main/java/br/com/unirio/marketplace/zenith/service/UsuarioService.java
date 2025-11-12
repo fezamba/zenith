@@ -1,7 +1,7 @@
 package br.com.unirio.marketplace.zenith.service;
 
 import br.com.unirio.marketplace.zenith.dto.RegistroDTO;
-import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException; // Precisamos reutilizar esta exceção
+import br.com.unirio.marketplace.zenith.exception.RegistroDuplicadoException;
 import br.com.unirio.marketplace.zenith.model.Cliente;
 import br.com.unirio.marketplace.zenith.repository.ClienteRepository;
 import br.com.unirio.marketplace.zenith.repository.UsuarioRepository;
@@ -25,10 +25,10 @@ public class UsuarioService {
     @Transactional
     public Cliente registarCliente(RegistroDTO registroDTO) {
         if (usuarioRepository.findByEmail(registroDTO.getEmail()).isPresent()) {
-            throw new ResourceNotFoundException("Email já cadastrado."); // FIXME: Usar uma exceção 400 (Bad Request)
+            throw new RegistroDuplicadoException("Email já cadastrado.");
         }
         if (clienteRepository.findByCpf(registroDTO.getCpf()).isPresent()) {
-            throw new ResourceNotFoundException("CPF já cadastrado."); // FIXME: Usar uma exceção 400 (Bad Request)
+            throw new RegistroDuplicadoException("CPF já cadastrado.");
         }
 
         Cliente cliente = new Cliente();
