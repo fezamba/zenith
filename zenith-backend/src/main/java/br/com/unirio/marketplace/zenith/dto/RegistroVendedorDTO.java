@@ -6,12 +6,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class RegistroDTO {
+public class RegistroVendedorDTO {
 
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank(message = "O nome (Razão Social) é obrigatório")
     private String nome;
 
-    @NotBlank(message = "O email é obrigatório")
+    @NotBlank(message = "O email de contato é obrigatório")
     @Email
     private String email;
 
@@ -19,7 +19,6 @@ public class RegistroDTO {
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
     private String senha;
     
-    @NotBlank(message = "O CPF é obrigatório")
-    private String cpf;
-
+    @NotBlank(message = "O CNPJ é obrigatório")
+    private String cnpj; 
 }

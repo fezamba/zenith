@@ -4,7 +4,10 @@ import br.com.unirio.marketplace.zenith.dto.ClienteDTO;
 import br.com.unirio.marketplace.zenith.dto.LoginDTO;
 import br.com.unirio.marketplace.zenith.dto.RegistroDTO;
 import br.com.unirio.marketplace.zenith.dto.TokenDTO;
+import br.com.unirio.marketplace.zenith.dto.RegistroVendedorDTO;
+import br.com.unirio.marketplace.zenith.dto.VendedorDTO;
 import br.com.unirio.marketplace.zenith.model.Cliente;
+import br.com.unirio.marketplace.zenith.model.Vendedor;
 import br.com.unirio.marketplace.zenith.security.TokenService;
 import br.com.unirio.marketplace.zenith.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -38,6 +41,13 @@ public class AuthController {
         Cliente cliente = usuarioService.registarCliente(registroDTO);
         ClienteDTO clienteDTO = new ClienteDTO(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteDTO);
+    }
+
+    @PostMapping("/registrar-vendedor")
+    public ResponseEntity<VendedorDTO> registarVendedor(@Valid @RequestBody RegistroVendedorDTO registroDTO) {
+        Vendedor vendedor = usuarioService.registrarVendedor(registroDTO);
+        VendedorDTO vendedorDTO = new VendedorDTO(vendedor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vendedorDTO);
     }
 
     @PostMapping("/login")
