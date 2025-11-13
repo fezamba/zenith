@@ -49,7 +49,6 @@ public class ProdutoService {
             if (termo != null && !termo.isBlank()) {
                 predicates.add(criteriaBuilder.like(root.get("nome"), "%" + termo.toLowerCase() + "%"));
             }
-
             if (precoMin != null) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("preco"), precoMin));
             }
