@@ -21,11 +21,12 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> listarTodos(
+            @RequestParam(required = false) String termo,
             @RequestParam(required = false) BigDecimal precoMin,
             @RequestParam(required = false) BigDecimal precoMax,
             @RequestParam(required = false) String statusSelo
     ) {
-        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos(precoMin, precoMax, statusSelo);
+        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos(termo, precoMin, precoMax, statusSelo);
         return ResponseEntity.ok(produtos);
     }
 

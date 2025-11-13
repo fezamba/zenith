@@ -39,12 +39,16 @@ public class ProdutoService {
 
 
     @Transactional(readOnly = true)
-    public List<ProdutoDTO> listarTodosProdutos(BigDecimal precoMin, BigDecimal precoMax, String statusSelo) {
+    public List<ProdutoDTO> listarTodosProdutos(String termo, BigDecimal precoMin, BigDecimal precoMax, String statusSelo) {
         
         Specification<Produto> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             predicates.add(criteriaBuilder.equal(root.get("status"), "ATIVO"));
+
+            if (termo != null && !termo.isBlank()) {
+                predicates.add(criteriaBuilder.like(root.get("nome"), "%" + termo.toLowerCase() + "%"));
+            }
 
             if (precoMin != null) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("preco"), precoMin));
