@@ -18,4 +18,7 @@ public class Categoria {
 
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
+
+    @Column(name = "status", nullable = false)
+    private String status;
 }

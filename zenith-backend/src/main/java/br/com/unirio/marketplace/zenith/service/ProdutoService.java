@@ -4,6 +4,7 @@ import br.com.unirio.marketplace.zenith.dto.CategoriaDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoDTO;
 import br.com.unirio.marketplace.zenith.dto.ProdutoInputDTO;
 import br.com.unirio.marketplace.zenith.dto.SolicitarSeloDTO;
+import br.com.unirio.marketplace.zenith.exception.RegistroDuplicadoException;
 import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException;
 import br.com.unirio.marketplace.zenith.model.Categoria;
 import br.com.unirio.marketplace.zenith.model.Produto;
@@ -102,6 +103,14 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<CategoriaDTO> listarCategoriasAtivas() {
+        return categoriaRepository.findByStatus("ATIVO")
+                .stream()
+                .map(CategoriaDTO::new)
+                .collect(Collectors.toList());
+    }
+
     public Produto findProdutoByIdInterno(Integer id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto com ID " + id + " não encontrado."));
@@ -126,6 +135,10 @@ public class ProdutoService {
 
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria com ID " + dto.getCategoriaId() + " não encontrada."));
+        
+        if (!"ATIVO".equals(categoria.getStatus())) {
+            throw new RegistroDuplicadoException("Não é possível cadastrar produtos em categorias inativas.");
+        }
 
         Produto produto = new Produto();
         produto.setNome(dto.getNome());

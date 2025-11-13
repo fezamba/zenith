@@ -15,4 +15,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer>, JpaS
     List<Produto> findByCategoriaId(Integer categoriaId);
 
     List<Produto> findByNomeContainingIgnoreCase(String nome);
+
+    List<Produto> findByStatusSelo(String statusSelo);
 }

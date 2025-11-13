@@ -43,7 +43,7 @@ public class ProdutoController {
 
     @GetMapping("/categorias")
     public ResponseEntity<List<CategoriaDTO>> listarCategorias() {
-        List<CategoriaDTO> categorias = produtoService.listarCategorias();
+        List<CategoriaDTO> categorias = produtoService.listarCategoriasAtivas();
         return ResponseEntity.ok(categorias);
     }
 }
