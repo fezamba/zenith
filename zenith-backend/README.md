@@ -21,8 +21,8 @@ O projeto utiliza uma arquitetura de **persistência híbrida**:
   * **MongoDB:** Banco de dados NoSQL.
   * **Maven:** Gestor de dependências e build.
   * **Lombok:** Para redução de *boilerplate* em modelos e DTOs.
-  * **jjwt (JSON Web Token):** Para a geração e validação de tokens de autenticação.
-  * **Springdoc OpenAPI (Swagger):** Para a documentação automática da API.
+  * **jjwt:** Para a geração e validação de tokens de autenticação.
+  * **Springdoc OpenAPI:** Para a documentação automática da API.
 
 ## Pré-requisitos
 
@@ -94,6 +94,6 @@ A API estará agora a ser executada em `http://localhost:8080`.
 
 Assim que a aplicação estiver a ser executada, a documentação completa e interativa da API estará disponível no seu navegador:
 
--> **`http://localhost:8080/swagger-ui.html`**
+**`http://localhost:8080/swagger-ui.html`**
 
 Esta interface permite visualizar e testar todos os endpoints disponíveis para Clientes, Vendedores e Administradores.
