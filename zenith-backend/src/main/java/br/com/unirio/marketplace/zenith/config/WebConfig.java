@@ -11,7 +11,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        // FIXME: Alterar depois, não sei o que o pessoal vai usar no front-end.
                         "http://localhost:4200", // Porta Angular
                         "http://localhost:3000", // Porta React
                         "http://localhost:5173"  // Porta Vue 3
