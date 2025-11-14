@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    
+    <header>
+        <nav>
+            <div id="logo"><button><img src="" alt=""></button></div> <!--logo que leva para home-->
+            <div class=clientoptions><!--opções do cliente logado-->
+                <button id="cartbtn">cart</button><!--botão que leva para a pagina do carrinho de compras-->
+                <button id="profilebtn">profile</button><!--botão que leva para a página de perfil do cliente-->
+            </div>
+            <div class="visitoptions"><!--opções do visitante-->
+                <button id="loginbtn">login</button><!--botão que abre a página de login-->
+                <button id="signupbtn">signup</button><!--botão que abre a página de cadastro-->
+            </div>
+        </nav>
+    </header>
+
+    <main> 
+        <div>
+            <div id="searchbar"><!--barra de pesquisa-->
+                <input type="text" id="searchid" placeholder="pesquisar produtos"></input>
+                <button id="searchbtn">search</button>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer> </footer>
 </body>
 </html>
