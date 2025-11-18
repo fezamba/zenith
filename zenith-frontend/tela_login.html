@@ -1,11 +1,132 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tela_login</title>
+    <title>Login - Zenith</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">
+                        <h1>Zenith</h1>
+                    </a>
+                </div>
+                
+                <div class="user-actions">
+                    <a href="tela_cadastro.html" class="btn btn-outline">Criar conta</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2 class="form-title">Fazer login</h2>
+                
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-input" placeholder="seu@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Senha</label>
+                        <input type="password" class="form-input" placeholder="Sua senha">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+                </form>
+
+                <div class="links">
+                    <a href="#">Esqueci minha senha</a>
+                    <a href="tela_cadastro.html">Não tenho conta - Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zenith</h3>
+                    <p>Marketplace sustentável e local</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Ajuda</h4>
+                    <a href="#">Central de Ajuda</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>email@zenith.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
