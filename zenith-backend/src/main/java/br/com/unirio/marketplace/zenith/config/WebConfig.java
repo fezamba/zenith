@@ -11,11 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "http://localhost:4200", // Porta Angular
-                        "http://localhost:3000", // Porta React
-                        "http://localhost:5173"  // Porta Vue 3
+                        "*" // Eu sei que isso aqui não é seguro mas como é um projeto educacional, tudo bem
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
