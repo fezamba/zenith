@@ -47,10 +47,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
                 
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+
                 .requestMatchers("/api/carrinho/**").authenticated()
                 .requestMatchers("/api/pedidos/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/avaliacoes").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/avaliacoes/produto/**").permitAll()
+
+                .requestMatchers("/api/vendedor/**").hasRole("VENDEDOR")
                 
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                
                 .anyRequest().authenticated()
             );
             
