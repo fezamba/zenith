@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhe do Produto - Zenith</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .product-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .btn-lg {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">
+                        <h1>Zenith</h1>
+                    </a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Procurar produtos...">
+                    <button>Buscar</button>
+                </div>
+                
+                <div class="user-actions">
+                    <a href="tela_login.html" class="btn btn-outline">Minha Conta</a>
+                    <a href="carrinho.html" class="btn btn-outline">Carrinho</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="product-detail">
+                <div class="product-gallery">
+                    <img src="https://via.placeholder.com/500x400" alt="Produto" class="product-image">
+                </div>
+                
+                <div class="product-info">
+                    <h1>Smartwatch Samsung Galaxy</h1>
+                    <div class="product-price">R$ 899,90</div>
+                    
+                    <div class="product-description">
+                        <p>Smartwatch Samsung com monitoramento de saúde, resistente à água e bateria de longa duração. Produto com selo sustentável.</p>
+                        <p><strong>Vendido por:</strong> TechStore</p>
+                        <p><strong>Estoque:</strong> 15 unidades</p>
+                    </div>
+
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn">-</button>
+                            <input type="text" class="quantity-input" value="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                        <button class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zenith</h3>
+                    <p>Marketplace sustentável e local</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Ajuda</h4>
+                    <a href="#">Central de Ajuda</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>email@zenith.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
