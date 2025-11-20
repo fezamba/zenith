@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Selos - Zenith</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-title {
+            margin: 30px 0;
+            color: var(--primary-color);
+        }
+
+        .validation-container {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--white);
+        }
+
+        .solicitacao-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .solicitacao-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .solicitacao-item.pending {
+            border-left: 4px solid #ffc107;
+            background: #fffbf0;
+        }
+
+        .solicitacao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .product-info {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .selo-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .selo-sustentavel {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .selo-local {
+            background: #2196F3;
+            color: white;
+        }
+
+        .justificativa {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">
+                        <h1>Zenith</h1>
+                    </a>
+                </div>
+                
+                <div class="user-actions">
+                    <a href="painel-adm.html" class="btn btn-outline">Voltar ao Painel</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Validação de Selos</h1>
+            
+            <div class="validation-container">
+                <div class="filter-bar">
+                    <select class="filter-select">
+                        <option value="all">Todos os status</option>
+                        <option value="pending" selected>Pendentes</option>
+                        <option value="approved">Aprovados</option>
+                        <option value="rejected">Rejeitados</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option value="all">Todos os selos</option>
+                        <option value="sustainable">Sustentável</option>
+                        <option value="local">Local</option>
+                    </select>
+                </div>
+
+                <div class="solicitacao-list">
+                    <div class="solicitacao-item pending">
+                        <div class="solicitacao-header">
+                            <div>
+                                <h3>Solicitação #SL2024001</h3>
+                                <p>Vendedor: TechStore • Data: 15/12/2024</p>
+                            </div>
+                            <span class="selo-badge selo-sustentavel">Sustentável</span>
+                        </div>
+
+                        <div class="product-info">
+                            <img src="https://via.placeholder.com/100x100" alt="Produto" class="product-image">
+                            <div>
+                                <h4>Smartwatch Samsung Galaxy</h4>
+                                <p><strong>Preço:</strong> R$ 899,90</p>
+                                <p><strong>Categoria:</strong> Eletrônicos</p>
+                            </div>
+                        </div>
+
+                        <div class="justificativa">
+                            <strong>Justificativa do vendedor:</strong>
+                            <p>Este produto utiliza materiais reciclados em 80% de sua composição e a embalagem é 100% biodegradável. O processo de produção consome 40% menos energia que modelos convencionais.</p>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-success">✅ Aprovar Selo</button>
+                            <button class="btn btn-danger">❌ Rejeitar</button>
+                            <button class="btn btn-outline">📋 Mais Detalhes</button>
+                        </div>
+                    </div>
+
+                    <div class="solicitacao-item pending">
+                        <div class="solicitacao-header">
+                            <div>
+                                <h3>Solicitação #SL2024002</h3>
+                                <p>Vendedor: CasaNova • Data: 14/12/2024</p>
+                            </div>
+                            <span class="selo-badge selo-local">Local</span>
+                        </div>
+
+                        <div class="product-info">
+                            <img src="https://via.placeholder.com/100x100" alt="Produto" class="product-image">
+                            <div>
+                                <h4>Cafeteira Expresso</h4>
+                                <p><strong>Preço:</strong> R$ 456,00</p>
+                                <p><strong>Categoria:</strong> Eletrodomésticos</p>
+                            </div>
+                        </div>
+
+                        <div class="justificativa">
+                            <strong>Justificativa do vendedor:</strong>
+                            <p>Produto fabricado integralmente no Rio de Janeiro, utilizando mão de obra local e fornecedores da região. A produção gera empregos para 15 famílias da comunidade.</p>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-success">✅ Aprovar Selo</button>
+                            <button class="btn btn-danger">❌ Rejeitar</button>
+                            <button class="btn btn-outline">📋 Mais Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zenith</h3>
+                    <p>Marketplace sustentável e local</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
