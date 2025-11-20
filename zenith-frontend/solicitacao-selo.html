@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Selo - Zenith</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-title {
+            margin: 30px 0;
+            color: var(--primary-color);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .selo-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .selo-option {
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .selo-option.selected {
+            border-color: var(--primary-color);
+            background: #f0f9f0;
+        }
+
+        .selo-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .selo-icon {
+            font-size: 2rem;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">
+                        <h1>Zenith</h1>
+                    </a>
+                </div>
+                
+                <div class="user-actions">
+                    <a href="painel-vendedor.html" class="btn btn-outline">Voltar ao Painel</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Solicitar Selo para Produto</h1>
+            
+            <div class="form-container">
+                <h2 class="form-title">Selecionar Produto e Selo</h2>
+                
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Selecionar Produto *</label>
+                        <select class="form-select">
+                            <option value="">Selecione um produto</option>
+                            <option value="1">Smartwatch Samsung Galaxy - R$ 899,90</option>
+                            <option value="2">Cafeteira Expresso - R$ 456,00</option>
+                            <option value="3">Livro Sustentabilidade - R$ 45,90</option>
+                        </select>
+                    </div>
+
+                    <div class="selo-info">
+                        <h3>🏷️ Tipos de Selos Disponíveis</h3>
+                        <p>Selecione o selo que deseja solicitar para seu produto</p>
+                    </div>
+
+                    <div class="selo-option" onclick="selectSelo(this)">
+                        <div class="selo-header">
+                            <div class="selo-icon">🌱</div>
+                            <div>
+                                <h3>Selo Sustentável</h3>
+                                <p>Para produtos ecológicos e sustentáveis</p>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>Produtos com baixo impacto ambiental</li>
+                            <li>Materiais reciclados ou recicláveis</li>
+                            <li>Processos de produção sustentáveis</li>
+                        </ul>
+                    </div>
+
+                    <div class="selo-option" onclick="selectSelo(this)">
+                        <div class="selo-header">
+                            <div class="selo-icon">📍</div>
+                            <div>
+                                <h3>Selo Local</h3>
+                                <p>Para produtos de fabricação regional</p>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>Produzido na região</li>
+                            <li>Fortalece a economia local</li>
+                            <li>Reduz emissões de transporte</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Justificativa *</label>
+                        <textarea class="form-textarea" placeholder="Explique por que seu produto merece este selo..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Enviar Solicitação</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zenith</h3>
+                    <p>Marketplace sustentável e local</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function selectSelo(element) {
+            document.querySelectorAll('.selo-option').forEach(selo => {
+                selo.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+    </script>
+</body>
+</html>
