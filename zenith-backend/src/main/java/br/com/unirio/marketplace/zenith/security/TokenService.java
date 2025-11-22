@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -27,8 +28,15 @@ public class TokenService {
         
         SecretKey chave = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 
+        String role = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("CLIENTE")
+                .replace("ROLE_", "");
+
         return Jwts.builder()
                 .subject(userPrincipal.getUsername())
+                .claim("role", role)
                 .issuedAt(agora)
                 .expiration(dataExpiracao)
                 .signWith(chave)
