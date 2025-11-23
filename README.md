@@ -6,14 +6,13 @@ Este é o repositório principal do projeto Zenith, uma plataforma de e-commerce
 
 O Zenith conecta Clientes, Vendedores e Administradores. A plataforma utiliza uma arquitetura híbrida de persistência para otimizar a performance, combinando um banco relacional para dados transacionais e um banco NoSQL para dados voláteis e de alto volume.
 
-### Stack Tecnológica
+### Stack
 
 * **Backend:** Java com Spring Boot
 * **Banco de Dados:**
-    * **MySQL:** Para dados transacionais (utilizadores, produtos, pedidos).
-    * **MongoDB:** Para dados voláteis e documentos (carrinhos, avaliações, logs).
-* **Frontend:** Aplicação web moderna utilizando (não sabemos como vai ser construido o front)
-
+    * **MySQL:** Para dados transacionais.
+    * **MongoDB:** Para dados voláteis e documentos.
+* **Frontend:** Aplicação web moderna.
 ## Estrutura do Repositório
 
 Este projeto é um "monorepo" lógico, dividido em duas pastas principais:
