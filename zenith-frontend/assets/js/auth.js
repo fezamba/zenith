@@ -15,7 +15,7 @@ export const Auth = {
 
     logout() {
         localStorage.removeItem(STORAGE_KEY);
-        window.location.href = '/login.html';
+        window.location.href = '../pages/tela_login.html';
     },
 
     getDadosUsuario() {
