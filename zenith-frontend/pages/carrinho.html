@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho - Zenith</title>
+    <title>Meu Carrinho - Zenith</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/carrinho.css">
-
 </head>
 <body>
+
     <header>
         <div class="container">
             <nav>
@@ -19,92 +20,74 @@
                 </div>
                 
                 <div class="search-bar">
-                    <input type="text" placeholder="Procurar produtos...">
-                    <button>Buscar</button>
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_login.html" class="btn btn-outline">Minha Conta</a>
-                    <a href="produtos.html" class="btn btn-outline">Continuar Comprando</a>
-                </div>
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Meu Carrinho</h1>
+    <main class="container">
+        <h2 class="page-title">Seu Carrinho de Compras</h2>
+
+        <div id="loading" style="text-align: center; padding: 50px; color: var(--text-light);">
+            <p>A carregar os seus produtos...</p>
+        </div>
+
+        <div id="emptyState" class="empty-cart" style="display: none;">
+            <h3>O seu carrinho está vazio</h3>
+            <p>Parece que ainda não adicionou nada.</p>
+            <a href="home.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">Começar a Comprar</a>
+        </div>
+
+        <div id="cartContent" class="cart-container" style="display: none;">
             
-            <div class="cart-container">
-                <div class="cart-items">
-                    <div class="cart-item">
-                        <img src="https://via.placeholder.com/100x100" alt="Produto" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3>Smartwatch Samsung Galaxy</h3>
-                            <p class="cart-item-seller">Vendido por: TechStore</p>
-                        </div>
-                        <div class="cart-item-price">R$ 899,90</div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn">-</button>
-                            <span>1</span>
-                            <button class="quantity-btn">+</button>
-                            <button class="remove-btn">🗑️</button>
-                        </div>
-                    </div>
-
-                    <div class="cart-item">
-                        <img src="https://via.placeholder.com/100x100" alt="Produto" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3>Cafeteira Expresso</h3>
-                            <p class="cart-item-seller">Vendido por: CasaNova</p>
-                        </div>
-                        <div class="cart-item-price">R$ 456,00</div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn">-</button>
-                            <span>1</span>
-                            <button class="quantity-btn">+</button>
-                            <button class="remove-btn">🗑️</button>
-                        </div>
-                    </div>
+            <div class="cart-items" id="listaItens">
                 </div>
 
-                <div class="cart-summary">
-                    <h3>Resumo do Pedido</h3>
-                    <div class="summary-row">
-                        <span>Subtotal</span>
-                        <span>R$ 1.355,90</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Frete</span>
-                        <span>R$ 15,00</span>
-                    </div>
-                    <div class="summary-row summary-total">
+            <div class="cart-summary">
+                <h3>Resumo do Pedido</h3>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotalValue">R$ 0,00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Frete</span>
+                    <span style="color: #27ae60;">Grátis</span>
+                </div>
+
+                <div class="summary-total">
+                    <div class="summary-row" style="border:none; margin:0; padding:0;">
                         <span>Total</span>
-                        <span>R$ 1.370,90</span>
+                        <span id="totalValue">R$ 0,00</span>
                     </div>
-                    <button class="btn btn-primary btn-full">Finalizar Compra</button>
                 </div>
+
+                <button id="btnCheckout" class="btn btn-primary btn-full">
+                    Finalizar Compra
+                </button>
+                
+                <a href="home.html" class="btn btn-outline btn-full" style="margin-top: 10px; text-align: center; display: block;">
+                    Continuar a Comprar
+                </a>
             </div>
         </div>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>email@zenith.com</p>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Zenith</h3>
+                <p>Consumo consciente.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="../assets/js/carrinho.js"></script>
 </body>
 </html>

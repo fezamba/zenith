@@ -1,94 +1,32 @@
-.page-title {
-    margin: 30px 0;
-    color: var(--primary-color);
-}
+@import url('painel-vendedor.css'); 
 
-.admin-grid {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 30px;
-    margin: 30px 0;
-}
-
-.admin-sidebar {
+.category-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
     background: var(--white);
-    padding: 25px;
-    border-radius: 8px;
-    height: fit-content;
-}
-
-.admin-nav {
-    list-style: none;
-}
-
-.admin-nav li {
-    margin-bottom: 10px;
-}
-
-.admin-nav a {
-    display: block;
-    padding: 12px 15px;
-    text-decoration: none;
-    color: var(--text-dark);
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.admin-nav a:hover,
-.admin-nav a.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-.admin-content {
-    background: var(--white);
-    padding: 30px;
-    border-radius: 8px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.stat-card {
-    background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
-    text-align: center;
-    border-left: 4px solid var(--primary-color);
 }
+.category-form input { flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; }
 
-.stat-number {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin: 10px 0;
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
 }
-
-.pending-actions {
-    background: #fff3cd;
-    padding: 20px;
+.cat-item {
+    background: var(--white);
+    padding: 15px;
     border-radius: 8px;
-    margin: 20px 0;
-    border-left: 4px solid #ffc107;
-}
-
-.action-item {
+    border: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #ffeaa7;
 }
+.badge-status { padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+.status-pendente { background: #fff3cd; color: #856404; }
 
-.action-item:last-child {
-    border-bottom: none;
-}
-
-.btn-sm {
-    padding: 6px 12px;
-    font-size: 0.9rem;
+.page-title {
+    margin-top: 25px;
 }

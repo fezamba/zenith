@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil - Zenith</title>
+    <title>Minha Conta - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
 </head>
@@ -18,93 +17,49 @@
                 </div>
                 
                 <div class="search-bar">
-                    <input type="text" placeholder="Procurar produtos...">
-                    <button>Buscar</button>
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="produtos.html" class="btn btn-outline">Produtos</a>
-                    <a href="carrinho.html" class="btn btn-outline">Carrinho</a>
-                </div>
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Meu Perfil</h1>
-            
-            <div class="profile-container">
-                <aside class="profile-sidebar">
-                    <div class="profile-avatar">
-                        👤
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">João Silva</div>
-                        <div class="profile-email">joao@email.com</div>
-                    </div>
-                    
-                    <div class="profile-points">
-                        <strong>250 Zenith Points</strong>
-                    </div>
-
-                    <ul class="nav-menu">
-                        <li><a href="#" class="active">Dados Pessoais</a></li>
-                        <li><a href="#">Meus Pedidos</a></li>
-                        <li><a href="#">Endereços</a></li>
-                        <li><a href="#">Alterar Senha</a></li>
-                        <li><a href="#">Sair</a></li>
-                    </ul>
-                </aside>
-
-                <section class="profile-content">
-                    <h2 class="section-title">Dados Pessoais</h2>
-                    
-                    <form>
-                        <div class="form-group">
-                            <label class="form-label">Nome Completo</label>
-                            <input type="text" class="form-input" value="João Silva">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">E-mail</label>
-                            <input type="email" class="form-input" value="joao@email.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">CPF</label>
-                            <input type="text" class="form-input" value="123.456.789-00">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Telefone</label>
-                            <input type="tel" class="form-input" value="(21) 99999-9999">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-save">Salvar Alterações</button>
-                    </form>
-                </section>
+    <main class="container profile-container">
+        <div class="profile-header">
+            <div class="avatar">👤</div>
+            <div>
+                <h2 id="userName">Carregando...</h2>
+                <p id="userEmail">...</p>
             </div>
+            <div class="points-card">
+                <span style="font-size:2rem">💎</span>
+                <div>
+                    <h3>Zenith Points</h3>
+                    <p id="userPoints" style="font-size:1.5rem; font-weight:bold; color:var(--primary-color)">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="orders-section">
+            <h3>Meus Pedidos Recentes</h3>
+            <p style="color:#777">Funcionalidade de histórico em desenvolvimento.</p>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>email@zenith.com</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script type="module">
+        import { Auth } from '../assets/js/auth.js';
+        import { $ } from '../assets/js/utils.js';
+
+        if (!Auth.isLogado()) window.location.href = 'tela_login.html';
+
+        const user = Auth.getDadosUsuario();
+        $('#userName').innerText = user.sub;
+        $('#userEmail').innerText = user.sub; 
+        
+        $('#btnSair').addEventListener('click', Auth.logout);
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos - Zenith</title>
+    <title>Catálogo - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/produtos.css">
 </head>
@@ -18,129 +18,66 @@
                 </div>
                 
                 <div class="search-bar">
-                    <input type="text" placeholder="Procurar produtos...">
-                    <button>Buscar</button>
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_login.html" class="btn btn-outline">Minha Conta</a>
-                    <a href="carrinho.html" class="btn btn-outline">Carrinho</a>
-                </div>
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Catálogo de Produtos</h1>
-            
-            <div class="products-container">
-                <aside class="filters">
-                    <div class="filter-group">
-                        <h3>Categorias</h3>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat1">
-                            <label for="cat1">Eletrônicos</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat2">
-                            <label for="cat2">Moda</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat3">
-                            <label for="cat3">Casa</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h3>Selos</h3>
-                        <div class="filter-option">
-                            <input type="checkbox" id="selo1">
-                            <label for="selo1">Sustentável</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="selo2">
-                            <label for="selo2">Local</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h3>Preço</h3>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price1">
-                            <label for="price1">Até R$ 100</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price2">
-                            <label for="price2">R$ 100 - R$ 500</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price3">
-                            <label for="price3">Acima de R$ 500</label>
-                        </div>
-                    </div>
-                </aside>
-
-                <section class="products-grid">
-                    <div class="product-card" onclick="location.href='produto-detalhe.html'">
-                        <img src="https://via.placeholder.com/300x200" alt="Produto" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-title">Smartwatch Samsung</h3>
-                            <div>
-                                <span class="badge badge-sustainable">Sustentável</span>
-                            </div>
-                            <div class="product-price">R$ 899,90</div>
-                            <p class="product-seller">TechStore</p>
-                        </div>
-                    </div>
-
-                    <div class="product-card" onclick="location.href='produto-detalhe.html'">
-                        <img src="https://via.placeholder.com/300x200" alt="Produto" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-title">Cafeteira Expresso</h3>
-                            <div>
-                                <span class="badge badge-local">Local</span>
-                            </div>
-                            <div class="product-price">R$ 456,00</div>
-                            <p class="product-seller">CasaNova</p>
-                        </div>
-                    </div>
-
-                    <div class="product-card" onclick="location.href='produto-detalhe.html'">
-                        <img src="https://via.placeholder.com/300x200" alt="Produto" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-title">Livro Sustentabilidade</h3>
-                            <div>
-                                <span class="badge badge-sustainable">Sustentável</span>
-                                <span class="badge badge-local">Local</span>
-                            </div>
-                            <div class="product-price">R$ 45,90</div>
-                            <p class="product-seller">LivrariaVerde</p>
-                        </div>
-                    </div>
-                </section>
+    <main class="container catalog-layout">
+        <aside class="filters-sidebar">
+            <div class="filter-group">
+                <h3>Categorias</h3>
+                <div id="listaCategorias" class="filter-options">
+                    <p>Carregando...</p>
+                </div>
             </div>
-        </div>
+
+            <div class="filter-group">
+                <h3>Preço</h3>
+                <div class="price-inputs">
+                    <input type="number" id="precoMin" placeholder="Mín">
+                    <span style="align-self:center">-</span>
+                    <input type="number" id="precoMax" placeholder="Máx">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>Selos</h3>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="filtroSelo"> 
+                    🌱 Apenas Sustentáveis
+                </label>
+            </div>
+
+            <button id="btnFiltrar" class="btn btn-primary" style="width:100%">Aplicar Filtros</button>
+            <button id="btnLimpar" class="btn btn-outline" style="width:100%; margin-top:10px">Limpar</button>
+        </aside>
+
+        <section class="catalog-content">
+            <div class="catalog-header">
+                <h2 id="tituloCatalogo">Todos os Produtos</h2>
+                <span id="contadorProdutos" style="color:var(--text-light)">...</span>
+            </div>
+            <div id="gridProdutos" class="products-grid">
+                <p>Carregando...</p>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                    <a href="#">Política de Trocas</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>email@zenith.com</p>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Zenith</h3>
+                <p>Consumo consciente.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="../assets/js/produtos.js"></script>
 </body>
 </html>

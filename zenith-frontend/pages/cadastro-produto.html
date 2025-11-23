@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Produto - Zenith</title>
+    <title>Novo Produto - Zenith</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/cadastro-produto.css">
 </head>
 <body>
+
     <header>
         <div class="container">
             <nav>
@@ -17,87 +19,70 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="painel-vendedor.html" class="btn btn-outline">Voltar ao Painel</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Cadastrar Novo Produto</h1>
-            
-            <div class="form-container">
-                <h2 class="form-title">Informações do Produto</h2>
-                
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">Nome do Produto *</label>
-                        <input type="text" class="form-input" placeholder="Ex: Smartwatch Samsung Galaxy">
-                    </div>
+    <main class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <h2 class="page-title">Cadastrar Novo Produto</h2>
+                <a href="painel-vendedor.html" class="btn btn-outline">Voltar</a>
+            </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Descrição *</label>
-                        <textarea class="form-textarea" placeholder="Descreva o produto..."></textarea>
-                    </div>
+            <form id="formProduto">
+                <div class="form-group">
+                    <label for="nome">Nome do Produto</label>
+                    <input type="text" id="nome" required placeholder="Ex: Smartphone Galaxy...">
+                </div>
 
+                <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">Categoria *</label>
-                        <select class="form-select">
-                            <option value="">Selecione uma categoria</option>
-                            <option value="eletronicos">Eletrônicos</option>
-                            <option value="moda">Moda</option>
-                            <option value="casa">Casa e Decoração</option>
-                            <option value="livros">Livros</option>
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="">Carregando categorias...</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Preço *</label>
-                        <input type="number" class="form-input" placeholder="R$ 0,00" step="0.01">
+                        <label for="estoque">Estoque Inicial</label>
+                        <input type="number" id="estoque" required min="1" value="1">
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Quantidade em Estoque *</label>
-                        <input type="number" class="form-input" placeholder="0">
-                    </div>
+                <div class="form-group">
+                    <label for="preco">Preço (R$)</label>
+                    <input type="number" id="preco" required min="0.01" step="0.01" placeholder="0,00">
+                </div>
 
-                    <div class="image-upload">
-                        <h3>📷 Adicionar Imagens</h3>
-                        <p>Clique para fazer upload das fotos do produto</p>
-                    </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição Detalhada</label>
+                    <textarea id="descricao" rows="5" placeholder="Descreva as características do produto..."></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Solicitar Selo</label>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="selo-sustentavel">
-                            <label for="selo-sustentavel">Selo Sustentável</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="selo-local">
-                            <label for="selo-local">Selo Local</label>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline btn-full">Cancelar</button>
-                        <button type="submit" class="btn btn-primary btn-full">Cadastrar Produto</button>
-                    </div>
-                </form>
-            </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg" id="btnSalvar">Publicar Produto</button>
+                </div>
+            </form>
         </div>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Zenith</h3>
+                <p>Área do Vendedor.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="../assets/js/cadastro-produto.js"></script>
 </body>
 </html>

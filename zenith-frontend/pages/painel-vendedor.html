@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Vendedor - Zenith</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/painel-vendedor.css">
 </head>
 <body>
+
     <header>
         <div class="container">
             <nav>
@@ -17,100 +19,82 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="produtos.html" class="btn btn-outline">Loja</a>
-                    <a href="perfil.html" class="btn btn-outline">Meu Perfil</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Painel do Vendedor</h1>
-            
-            <div class="dashboard-cards">
-                <div class="dashboard-card">
-                    <h3>Pedidos Pendentes</h3>
-                    <div class="card-number">12</div>
-                    <p>Para processar</p>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Produtos Ativos</h3>
-                    <div class="card-number">45</div>
-                    <p>Em estoque</p>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Vendas do Mês</h3>
-                    <div class="card-number">R$ 8.245</div>
-                    <p>Receita total</p>
-                </div>
-            </div>
-
-            <div class="quick-actions">
-                <a href="cadastro-produto.html" class="action-btn">
-                    <h3>➕ Cadastrar Produto</h3>
-                    <p>Adicionar novo item</p>
-                </a>
-                <a href="#" class="action-btn">
-                    <h3>📦 Meus Pedidos</h3>
-                    <p>Gerenciar vendas</p>
-                </a>
-                <a href="solicitacao-selo.html" class="action-btn">
-                    <h3>🏷️ Solicitar Selo</h3>
-                    <p>Para produtos</p>
-                </a>
-                <a href="#" class="action-btn">
-                    <h3>📊 Relatórios</h3>
-                    <p>Ver desempenho</p>
-                </a>
-            </div>
-
-            <div class="recent-products">
-                <h2>Produtos Recentes</h2>
-                <div class="products-list">
-                    <div class="product-item">
-                        <img src="https://via.placeholder.com/80x80" alt="Produto" class="product-image">
-                        <div>
-                            <h4>Smartwatch Samsung</h4>
-                            <p>Estoque: 15 • R$ 899,90</p>
-                        </div>
-                        <span class="badge badge-sustainable">Sustentável</span>
-                        <div class="product-actions">
-                            <button class="btn btn-outline btn-sm">Editar</button>
-                            <button class="btn btn-outline btn-sm">Desativar</button>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <img src="https://via.placeholder.com/80x80" alt="Produto" class="product-image">
-                        <div>
-                            <h4>Cafeteira Expresso</h4>
-                            <p>Estoque: 8 • R$ 456,00</p>
-                        </div>
-                        <span class="badge badge-local">Local</span>
-                        <div class="product-actions">
-                            <button class="btn btn-outline btn-sm">Editar</button>
-                            <button class="btn btn-outline btn-sm">Desativar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <main class="container">
+        <div class="dashboard-header">
+            <h2 class="page-title">Painel do Vendedor</h2>
+            <a href="cadastro-produto.html" class="btn btn-primary">+ Novo Produto</a>
         </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-target="meus-produtos">Meus Produtos</button>
+            <button class="tab-btn" data-target="minhas-vendas">Vendas & Pedidos</button>
+        </div>
+
+        <section id="meus-produtos" class="tab-content active">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Status</th>
+                            <th>Selo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaProdutos">
+                        </tbody>
+                </table>
+                <p id="loadingProdutos" class="loading-text">Carregando produtos...</p>
+                <p id="emptyProdutos" class="empty-text" style="display:none;">Você ainda não cadastrou nenhum produto.</p>
+            </div>
+        </section>
+
+        <section id="minhas-vendas" class="tab-content">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Pedido #</th>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaVendas">
+                        </tbody>
+                </table>
+                <p id="loadingVendas" class="loading-text">Carregando vendas...</p>
+                <p id="emptyVendas" class="empty-text" style="display:none;">Nenhuma venda realizada ainda.</p>
+            </div>
+        </section>
+
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central do Vendedor</a>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Zenith</h3>
+                <p>Área restrita para parceiros.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="../assets/js/painel-vendedor.js"></script>
 </body>
 </html>

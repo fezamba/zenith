@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - Zenith</title>
+    <title>Painel Admin - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/painel-adm.css">
 </head>
@@ -17,96 +16,71 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_login.html" class="btn btn-outline">Sair</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Painel Administrativo</h1>
-            
-            <div class="admin-grid">
-                <aside class="admin-sidebar">
-                    <ul class="admin-nav">
-                        <li><a href="#" class="active">📊 Dashboard</a></li>
-                        <li><a href="validacao-selo.html">🏷️ Validação de Selos</a></li>
-                        <li><a href="#">👥 Gerenciar Usuários</a></li>
-                        <li><a href="#">📂 Gerenciar Categorias</a></li>
-                        <li><a href="#">📝 Logs do Sistema</a></li>
-                        <li><a href="#">⚙️ Configurações</a></li>
-                    </ul>
-                </aside>
-
-                <section class="admin-content">
-                    <h2>Visão Geral do Sistema</h2>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Usuários Totais</h3>
-                            <div class="stat-number">1.247</div>
-                            <p>Clientes e vendedores</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Produtos Ativos</h3>
-                            <div class="stat-number">3.458</div>
-                            <p>No catálogo</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Vendas do Mês</h3>
-                            <div class="stat-number">R$ 89.245</div>
-                            <p>Receita total</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Selos Ativos</h3>
-                            <div class="stat-number">156</div>
-                            <p>Produtos certificados</p>
-                        </div>
-                    </div>
-
-                    <div class="pending-actions">
-                        <h3>⚠️ Ações Pendentes</h3>
-                        
-                        <div class="action-item">
-                            <div>
-                                <strong>Solicitações de Selo</strong>
-                                <p>12 solicitações aguardando análise</p>
-                            </div>
-                            <a href="validacao-selo.html" class="btn btn-primary btn-sm">Verificar</a>
-                        </div>
-
-                        <div class="action-item">
-                            <div>
-                                <strong>Cadastros de Vendedores</strong>
-                                <p>5 vendedores aguardando aprovação</p>
-                            </div>
-                            <button class="btn btn-primary btn-sm">Aprovar</button>
-                        </div>
-
-                        <div class="action-item">
-                            <div>
-                                <strong>Denúncias</strong>
-                                <p>3 denúncias para analisar</p>
-                            </div>
-                            <button class="btn btn-primary btn-sm">Analisar</button>
-                        </div>
-                    </div>
-                </section>
-            </div>
+    <main class="container">
+        <h2 class="page-title">Administração do Sistema</h2>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-target="vendedores">Vendedores Pendentes</button>
+            <button class="tab-btn" data-target="selos">Solicitações de Selo</button>
+            <button class="tab-btn" data-target="categorias">Gerenciar Categorias</button>
         </div>
+
+        <section id="vendedores" class="tab-content active">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome / Empresa</th>
+                            <th>CNPJ</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaVendedores"></tbody>
+                </table>
+                <p id="msgVendedores" class="empty-msg">Nenhum vendedor pendente.</p>
+            </div>
+        </section>
+
+        <section id="selos" class="tab-content">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Vendedor</th>
+                            <th>Justificativa</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaSelos"></tbody>
+                </table>
+                <p id="msgSelos" class="empty-msg">Nenhuma solicitação de selo.</p>
+            </div>
+        </section>
+
+        <section id="categorias" class="tab-content">
+            <div class="category-form">
+                <input type="text" id="novaCategoriaNome" placeholder="Nome da nova categoria">
+                <button id="btnCriarCategoria" class="btn btn-primary">Adicionar</button>
+            </div>
+            <div class="category-list" id="listaCategorias">
+                </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script type="module" src="../assets/js/painel-adm.js"></script>
 </body>
 </html>

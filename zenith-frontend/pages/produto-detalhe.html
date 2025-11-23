@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhe do Produto - Zenith</title>
+    <title>Detalhes do Produto - Zenith</title>
+    
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/produto-detalhe.css">
-
 </head>
 <body>
+
     <header>
         <div class="container">
             <nav>
@@ -19,65 +20,106 @@
                 </div>
                 
                 <div class="search-bar">
-                    <input type="text" placeholder="Procurar produtos...">
-                    <button>Buscar</button>
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_login.html" class="btn btn-outline">Minha Conta</a>
-                    <a href="carrinho.html" class="btn btn-outline">Carrinho</a>
-                </div>
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <div class="product-detail">
-                <div class="product-gallery">
-                    <img src="https://via.placeholder.com/500x400" alt="Produto" class="product-image">
-                </div>
-                
-                <div class="product-info">
-                    <h1>Smartwatch Samsung Galaxy</h1>
-                    <div class="product-price">R$ 899,90</div>
-                    
-                    <div class="product-description">
-                        <p>Smartwatch Samsung com monitoramento de saúde, resistente à água e bateria de longa duração. Produto com selo sustentável.</p>
-                        <p><strong>Vendido por:</strong> TechStore</p>
-                        <p><strong>Estoque:</strong> 15 unidades</p>
-                    </div>
+    <main class="container">
+        
+        <div style="margin: 20px 0; color: var(--text-light); font-size: 0.9rem;">
+            <a href="home.html" style="color: inherit; text-decoration: none;">Home</a> &gt; 
+            <span id="breadcrumbCategoria">Categoria</span> &gt; 
+            <span id="breadcrumbNome">Produto</span>
+        </div>
 
-                    <div class="product-actions">
-                        <div class="quantity-selector">
-                            <button class="quantity-btn">-</button>
-                            <input type="text" class="quantity-input" value="1">
-                            <button class="quantity-btn">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+        <div class="product-detail-container">
+            
+            <div class="product-gallery">
+                <div class="main-image">
+                    <span>📦</span>
+                </div>
+            </div>
+
+            <div class="product-info-section">
+                <div id="seloContainer" style="margin-bottom: 10px;"></div>
+                
+                <h1 id="produtoNome" class="product-title-large">Carregando...</h1>
+                
+                <div class="seller-ref">
+                    Vendido por: <span id="produtoVendedor">-</span>
+                </div>
+
+                <div class="price-section">
+                    <span id="produtoPreco" class="big-price">R$ --,--</span>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                        À vista no PIX ou em até 12x no cartão
+                    </p>
+                </div>
+
+                <div class="actions-section">
+                    <div class="quantity-selector">
+                        <button id="btnQtdMenos">-</button>
+                        <input type="number" id="inputQtd" value="1" min="1" readonly>
+                        <button id="btnQtdMais">+</button>
                     </div>
+                    <button id="btnAdicionarCarrinho" class="btn btn-primary btn-lg">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+
+                <div class="description-box">
+                    <h3>Descrição</h3>
+                    <p id="produtoDescricao">...</p>
                 </div>
             </div>
         </div>
+
+        <section class="reviews-section">
+            <h3>Avaliações dos Clientes</h3>
+            
+            <div id="listaAvaliacoes" class="reviews-list">
+                <p>Carregando avaliações...</p>
+            </div>
+
+            <div id="formAvaliacaoContainer" class="review-form-box" style="display: none;">
+                <h4>Avaliar este produto</h4>
+                <form id="formAvaliacao">
+                    <div class="rating-select">
+                        <label>Nota:</label>
+                        <select id="notaAvaliacao">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+                    <textarea id="textoAvaliacao" placeholder="Conte-nos o que achou do produto..." required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+                </form>
+            </div>
+            <div id="avisoLoginAvaliacao" style="margin-top: 20px; color: #666;">
+                <a href="tela_login.html" style="color: var(--primary-color);">Faça login</a> para avaliar este produto.
+            </div>
+        </section>
+
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>email@zenith.com</p>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Zenith</h3>
+                <p>Consumo consciente.</p>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="../assets/js/produto-detalhe.js"></script>
 </body>
 </html>
