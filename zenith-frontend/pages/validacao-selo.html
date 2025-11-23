@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validação de Selos - Zenith</title>
+    <title>Validar Selo - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/validacao-selo.css">
 </head>
@@ -17,107 +16,49 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="painel-adm.html" class="btn btn-outline">Voltar ao Painel</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="page-title">Validação de Selos</h1>
-            
-            <div class="validation-container">
-                <div class="filter-bar">
-                    <select class="filter-select">
-                        <option value="all">Todos os status</option>
-                        <option value="pending" selected>Pendentes</option>
-                        <option value="approved">Aprovados</option>
-                        <option value="rejected">Rejeitados</option>
-                    </select>
-                    
-                    <select class="filter-select">
-                        <option value="all">Todos os selos</option>
-                        <option value="sustainable">Sustentável</option>
-                        <option value="local">Local</option>
-                    </select>
+    <main class="container">
+        <a href="painel-adm.html" class="btn btn-outline" style="margin: 20px 0; display:inline-block;">&larr; Voltar ao Painel</a>
+        
+        <div class="validation-card">
+            <div class="header-validation">
+                <h2 class="page-title">Análise de Selo</h2>
+                <span class="status-tag">PENDENTE</span>
+            </div>
+
+            <div class="product-summary">
+                <div class="img-placeholder">📦</div>
+                <div>
+                    <h3 id="prodNome">Carregando...</h3>
+                    <p id="prodVendedor" style="color:var(--text-light)">Vendedor: ...</p>
+                    <p id="prodPreco" class="price">...</p>
                 </div>
+            </div>
 
-                <div class="solicitacao-list">
-                    <div class="solicitacao-item pending">
-                        <div class="solicitacao-header">
-                            <div>
-                                <h3>Solicitação #SL2024001</h3>
-                                <p>Vendedor: TechStore • Data: 15/12/2024</p>
-                            </div>
-                            <span class="selo-badge selo-sustentavel">Sustentável</span>
-                        </div>
+            <div class="justification-box">
+                <h4>Justificativa do Vendedor</h4>
+                <p id="prodJustificativa" class="justification-text">
+                    ...
+                </p>
+            </div>
 
-                        <div class="product-info">
-                            <img src="https://via.placeholder.com/100x100" alt="Produto" class="product-image">
-                            <div>
-                                <h4>Smartwatch Samsung Galaxy</h4>
-                                <p><strong>Preço:</strong> R$ 899,90</p>
-                                <p><strong>Categoria:</strong> Eletrônicos</p>
-                            </div>
-                        </div>
-
-                        <div class="justificativa">
-                            <strong>Justificativa do vendedor:</strong>
-                            <p>Este produto utiliza materiais reciclados em 80% de sua composição e a embalagem é 100% biodegradável. O processo de produção consome 40% menos energia que modelos convencionais.</p>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-success">✅ Aprovar Selo</button>
-                            <button class="btn btn-danger">❌ Rejeitar</button>
-                            <button class="btn btn-outline">📋 Mais Detalhes</button>
-                        </div>
-                    </div>
-
-                    <div class="solicitacao-item pending">
-                        <div class="solicitacao-header">
-                            <div>
-                                <h3>Solicitação #SL2024002</h3>
-                                <p>Vendedor: CasaNova • Data: 14/12/2024</p>
-                            </div>
-                            <span class="selo-badge selo-local">Local</span>
-                        </div>
-
-                        <div class="product-info">
-                            <img src="https://via.placeholder.com/100x100" alt="Produto" class="product-image">
-                            <div>
-                                <h4>Cafeteira Expresso</h4>
-                                <p><strong>Preço:</strong> R$ 456,00</p>
-                                <p><strong>Categoria:</strong> Eletrodomésticos</p>
-                            </div>
-                        </div>
-
-                        <div class="justificativa">
-                            <strong>Justificativa do vendedor:</strong>
-                            <p>Produto fabricado integralmente no Rio de Janeiro, utilizando mão de obra local e fornecedores da região. A produção gera empregos para 15 famílias da comunidade.</p>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-success">✅ Aprovar Selo</button>
-                            <button class="btn btn-danger">❌ Rejeitar</button>
-                            <button class="btn btn-outline">📋 Mais Detalhes</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="actions-validation">
+                <button id="btnRejeitar" class="btn btn-outline btn-danger">Rejeitar Solicitação</button>
+                <button id="btnAprovar" class="btn btn-primary btn-success">Aprovar Selo</button>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script type="module" src="../assets/js/validacao-selo.js"></script>
 </body>
 </html>

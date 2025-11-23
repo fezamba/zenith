@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/tela-cadastro.css">
@@ -17,86 +16,68 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_login.html" class="btn btn-outline">Já tenho conta</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <div class="form-container">
-                <h2 class="form-title">Criar conta</h2>
-                
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">Nome completo</label>
-                        <input type="text" class="form-input" placeholder="Seu nome completo">
-                    </div>
+    <main class="container login-container">
+        <div class="login-card" style="max-width: 500px;">
+            <h2>Crie sua conta</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-type="cliente">Sou Cliente</button>
+                <button class="tab-btn" data-type="vendedor">Sou Vendedor</button>
+            </div>
 
-                    <div class="form-group">
-                        <label class="form-label">E-mail</label>
-                        <input type="email" class="form-input" placeholder="seu@email.com">
-                    </div>
+            <form id="formCadastro">
+                <input type="hidden" id="tipoUsuario" value="cliente">
 
-                    <div class="form-group">
-                        <label class="form-label">CPF/CNPJ</label>
-                        <input type="text" class="form-input" placeholder="000.000.000-00">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Tipo de conta</label>
-                        <div class="form-radio-group">
-                            <label class="form-radio">
-                                <input type="radio" name="account-type" value="cliente" checked>
-                                Cliente
-                            </label>
-                            <label class="form-radio">
-                                <input type="radio" name="account-type" value="vendedor">
-                                Vendedor
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Senha</label>
-                        <input type="password" class="form-input" placeholder="Mínimo 6 caracteres">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Confirmar senha</label>
-                        <input type="password" class="form-input" placeholder="Digite a senha novamente">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-full">Criar conta</button>
-                </form>
-
-                <div class="login-link">
-                    <p>Já tem uma conta? <a href="tela_login.html">Fazer login</a></p>
+                <div class="form-group">
+                    <label for="nome">Nome Completo / Razão Social</label>
+                    <input type="text" id="nome" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group" id="group-cpf">
+                    <label for="doc">CPF</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00">
+                </div>
+
+                <div class="form-group" id="group-cnpj" style="display:none;">
+                    <label for="doc">CNPJ</label>
+                    <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmaSenha">Confirmar Senha</label>
+                    <input type="password" id="confirmaSenha" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="btnCadastrar">Cadastrar</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Já tem conta? <a href="tela_login.html">Faça Login</a></p>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                    <a href="#">Política de Trocas</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>zenith@gmail.com</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script type="module" src="../assets/js/cadastro.js"></script>
 </body>
 </html>

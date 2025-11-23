@@ -17,57 +17,42 @@
                     </a>
                 </div>
                 
-                <div class="user-actions">
-                    <a href="tela_cadastro.html" class="btn btn-outline">Criar conta</a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
+                    <button id="btnBuscar">Buscar</button>
                 </div>
+                
+                <div class="user-actions" id="menuUsuario">
+                    </div>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <div class="form-container">
-                <h2 class="form-title">Fazer login</h2>
-                
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">E-mail</label>
-                        <input type="email" class="form-input" placeholder="seu@email.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Senha</label>
-                        <input type="password" class="form-input" placeholder="Sua senha">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-full">Entrar</button>
-                </form>
-
-                <div class="links">
-                    <a href="#">Esqueci minha senha</a>
-                    <a href="tela_cadastro.html">Não tenho conta - Cadastrar</a>
+    <main class="container login-container">
+        <div class="login-card">
+            <h2>Bem-vindo de volta</h2>
+            <p class="subtitle">Entre para gerenciar suas compras ou vendas</p>
+            
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
                 </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" required placeholder="********">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="btnEntrar">Entrar</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Não tem uma conta? <a href="tela_cadastro.html">Cadastre-se</a></p>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Zenith</h3>
-                    <p>Marketplace sustentável e local</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Ajuda</h4>
-                    <a href="#">Central de Ajuda</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contato</h4>
-                    <p>email@zenith.com</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script type="module" src="../assets/js/login.js"></script>
 </body>
 </html>
