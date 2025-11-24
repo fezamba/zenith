@@ -1,4 +1,4 @@
-# Backend do Marketplace Zenith
+# Zenith Backend
 
 Este diretório (`zenith-backend/`) contém a API RESTful completa para a plataforma de marketplace Zenith.
 
@@ -97,3 +97,5 @@ Assim que a aplicação estiver a ser executada, a documentação completa e int
 **`http://localhost:8080/swagger-ui.html`**
 
 Esta interface permite visualizar e testar todos os endpoints disponíveis para Clientes, Vendedores e Administradores.
+
+Desenvolvido para a disciplina de Engenharia de Software I e Projeto Integrador II - UNIRIO.
