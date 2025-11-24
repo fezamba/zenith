@@ -46,7 +46,7 @@ Este cenário avalia a capacidade do sistema de entregar listagens de produtos s
 | **Vazão (Req/Seg)** | 850.34 | 477.32 | O teste Java, sem pausas, saturou a CPU, atingindo quase o dobro da vazão, provando a robustez do Spring Boot. |
 | **Sucesso** | 100% | 100% | Nenhuma falha registada em quase 6.000 requisições totais. |
 
-### Gráfico de Performance (Latência vs Vazão)
+### Latência vs Vazão
 
 ```text
 LATÊNCIA
@@ -76,7 +76,7 @@ Este cenário avalia a capacidade de escrita concorrente num banco de dados NoSQ
 
 | Métrica | Java | k6  | Análise |
 | :--- | :--- | :--- | :--- |
-| **Latência Média** | 67.00 ms | *9.30 ms | O MongoDB mostrou-se muito performático. A latência mais alta no Java deve-se à concorrência extrema de threads disputando a CPU. |
+| **Latência Média** | 67.00 ms | 9.30 ms | O MongoDB mostrou-se muito performático. A latência mais alta no Java deve-se à concorrência extrema de threads disputando a CPU. |
 | **Vazão (Req/Seg)** | 250.31 | 37.41 | O k6 usou um `sleep(0.5)`, simulando um humano clicando rápido. O Java provou que o sistema aguenta 6x mais carga do que o teste "realista" exigiu. |
 | **Sucesso** | 100% | 100% | O MongoDB lidou com a concorrência de escrita sem erros de lock. |
 
