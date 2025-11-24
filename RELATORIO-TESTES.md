@@ -12,7 +12,7 @@ Para garantir a confiabilidade dos dados, foram utilizadas duas abordagens disti
 
 1.  **Abordagem com Java:**
 
-      * **Ferramenta:** Scripts Java customizados (`TesteCarga*.java`).
+      * **Ferramenta:** Scripts Java (`TesteCarga*.java`).
       * **Comportamento:** Execução em loop contínuo sem pausas (`sleep`).
       * **Objetivo:** Encontrar o limite máximo teórico de vazão do hardware.
 
