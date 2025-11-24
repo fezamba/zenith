@@ -26,3 +26,5 @@ Para instruções detalhadas sobre como configurar e executar cada parte da apli
 
 1.  [**Instruções do Backend**](./zenith-backend/README.md)
 2.  [**Instruções do Frontend**](./zenith-frontend/README.md)
+   
+Desenvolvido para a disciplina de Engenharia de Software I e Projeto Integrador II - UNIRIO.
