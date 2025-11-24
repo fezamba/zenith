@@ -102,10 +102,8 @@ k6   | ### (37 req/s) *Limitado por simulação humana
 
 ## Conclusão Final
 
-O sistema **Zenith Marketplace** foi submetido a testes de carga rigorosos simulando cenários de alta concorrência.
+O sistema Zenith foi submetido a testes de carga rigorosos simulando cenários de alta concorrência.
 
 1.  **Performance de Leitura:** Excepcional. O sistema responde em menos de 2ms em condições ideais, suportando picos de quase 1.000 consultas por segundo numa máquina local.
 2.  **Performance de Escrita:** Robusta. A arquitetura híbrida (MySQL + MongoDB) provou-se eficaz, isolando a carga pesada de escrita de carrinhos no banco NoSQL, mantendo o banco relacional livre para consultas.
 3.  **Estabilidade:** Em todos os cenários (Stress e Load), a taxa de erro foi de 0%, demonstrando uma excelente gestão de transações e conexões pelo Spring Boot.
-
-**Recomendação:** O sistema está pronto para produção inicial. Para escalar para milhões de utilizadores, recomenda-se a implementação de*paginação na busca (atualmente traz todos os resultados) para evitar sobrecarga de memória futura.
