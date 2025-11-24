@@ -61,7 +61,7 @@ public class PedidoService {
         pedido.setCliente(cliente);
         pedido.setEnderecoEntrega(endereco);
         pedido.setData(LocalDate.now());
-        pedido.setStatus("AGUARDANDO_PAGAMENTO");
+        pedido.setStatus("PAGAMENTO_APROVADO"); //Em produção, isso seria "AGUARDANDO_PAGAMENTO"
 
         List<ItemPedido> itensDoPedido = new ArrayList<>();
         BigDecimal valorTotal = BigDecimal.ZERO;

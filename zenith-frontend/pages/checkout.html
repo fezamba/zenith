@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - Zenith</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/checkout.css">
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <div style="display:flex; align-items:center;">
+                <button id="btnVoltar" class="btn-icon-back">⬅</button>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration:none;"><h1>Zenith</h1></a>
+                </div>
+            </div>
+            </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">Finalizar Pedido</h2>
+
+        <div class="checkout-grid">
+            
+            <div class="checkout-form-section">
+                
+                <div class="checkout-card">
+                    <h3>📍 Endereço de Entrega</h3>
+                    <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">
+                        Selecione o ID do endereço cadastrado.
+                    </p>
+                    <div class="form-group">
+                        <label>ID do Endereço:</label>
+                        <input type="number" id="enderecoId" value="1" min="1" class="input-checkout">
+                        <small>(Nota de DSV: use o ID do seu endereço no banco)</small>
+                    </div>
+                </div>
+
+                <div class="checkout-card">
+                    <h3>💳 Pagamento</h3>
+                    
+                    <div class="payment-option selected">
+                        <span>📄 Boleto / PIX</span>
+                    </div>
+                    <div class="payment-option">
+                        <span>💳 Cartão de Crédito</span>
+                    </div>
+
+                    <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
+
+                    <div class="zenith-points-box">
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <label for="usarPontos" style="cursor:pointer; font-weight:600; color:var(--primary-color);">
+                                <input type="checkbox" id="usarPontos"> 
+                                Usar meus Zenith Points
+                            </label>
+                            <span class="points-badge">💎 Você tem pontos!</span>
+                        </div>
+                        <p style="font-size:0.85rem; color:#666; margin-top:5px;">
+                            Abata parte do valor usando seu saldo de fidelidade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary-section">
+                <div class="cart-summary">
+                    <h3>Resumo da Compra</h3>
+                    <div id="listaResumoItens" class="summary-items-list">
+                        </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotalVal">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Pontos (Desconto)</span>
+                        <span id="descontoPontos" style="color:green;">- R$ 0,00</span>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <div class="summary-row" style="border:none; padding:0;">
+                            <span>Total</span>
+                            <span id="totalVal">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button id="btnConfirmarPedido" class="btn btn-primary btn-full">
+                        CONFIRMAR PEDIDO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalSucesso" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <div style="font-size:3rem;">🎉</div>
+            <h2>Pedido Realizado!</h2>
+            <p>Seu pedido <strong id="numeroPedido">#000</strong> foi processado com sucesso.</p>
+            <button onclick="window.location.href='home.html'" class="btn btn-primary">Voltar à Loja</button>
+        </div>
+    </div>
+
+    <script type="module" src="../assets/js/header.js"></script>
+    <script type="module" src="../assets/js/checkout.js"></script>
+</body>
+</html>

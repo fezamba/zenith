@@ -17,18 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarCarrinho();
     
     $('#btnCheckout').addEventListener('click', () => {
-        alert("Funcionalidade de Checkout será implementada em breve!"); 
+        if (carrinhoAtual && carrinhoAtual.itens.length > 0) {
+            window.location.href = 'checkout.html';
+        } else {
+            alert("Seu carrinho está vazio.");
+        }
     });
 });
 
 function atualizarHeader() {
     if (Auth.isLogado()) {
         const user = Auth.getDadosUsuario();
-        menuUsuario.innerHTML = `
-            <a href="perfil.html" class="btn btn-outline">Minha Conta</a>
-            <button id="btnSair" class="btn" style="background:#d32f2f; color:white; margin-left:10px">Sair</button>
-        `;
-        $('#btnSair').addEventListener('click', Auth.logout);
     } else {
         alert("Faça login para ver seu carrinho.");
         window.location.href = 'tela_login.html';
@@ -70,7 +69,7 @@ function renderizarItens(itens) {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
         itemDiv.innerHTML = `
-            <img src="../assets/img/placeholder.png" onerror="this.src='https://placehold.co/100'" alt="Produto" class="cart-item-image">
+            <div class="cart-item-image" style="background:#eee; display:flex; align-items:center; justify-content:center; font-size:2rem;">📦</div>
             
             <div class="cart-item-details">
                 <h3>${item.nomeProduto}</h3>
@@ -102,12 +101,10 @@ function atualizarTotais(valorTotal) {
 }
 
 function adicionarEventosAosBotoes() {
-    // Botão Menos (-)
     document.querySelectorAll('.btn-menos').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.target.dataset.id;
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
             const item = carrinhoAtual.itens.find(i => i.produtoId == id);
-            
             if (item.quantidade > 1) {
                 alterarQuantidade(id, item.quantidade - 1);
             } else {
@@ -117,33 +114,27 @@ function adicionarEventosAosBotoes() {
     });
 
     document.querySelectorAll('.btn-mais').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.target.dataset.id;
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
             const item = carrinhoAtual.itens.find(i => i.produtoId == id);
             alterarQuantidade(id, item.quantidade + 1);
         });
     });
 
     document.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.target.dataset.id;
-            if(confirm("Tem certeza que deseja remover este item?")) {
-                removerItem(id);
-            }
+        btn.addEventListener('click', () => {
+            if(confirm("Remover do carrinho?")) removerItem(btn.dataset.id);
         });
     });
 }
 
 async function alterarQuantidade(produtoId, novaQuantidade) {
     try {
-        
         await Api.carrinho.atualizar({
             produtoId: parseInt(produtoId),
             quantidade: parseInt(novaQuantidade)
         });
-        
         carregarCarrinho(); 
-
     } catch (error) {
         alert("Erro ao atualizar: " + error.message);
     }
