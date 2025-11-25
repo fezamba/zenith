@@ -32,7 +32,6 @@ function atualizarHeader() {
     if (Auth.isLogado()) {
         const user = Auth.getDadosUsuario();
         
-        // Mostra o formulário de avaliação (só para quem está logado)
         const formAvaliacaoContainer = document.getElementById('formAvaliacaoContainer');
         const avisoLoginAvaliacao = document.getElementById('avisoLoginAvaliacao');
         if (formAvaliacaoContainer) formAvaliacaoContainer.style.display = 'block';
@@ -88,11 +87,16 @@ async function carregarDetalhes() {
 }
 
 async function carregarAvaliacoes() {
+    const lista = $('#listaAvaliacoes');
+    lista.innerHTML = '<p>Carregando avaliações...</p>';
+
     try {
+        console.log("Buscando avaliações para o produto ID:", produtoId);
         const avaliacoes = await Api.avaliacoes.listarDoProduto(produtoId);
-        const lista = $('#listaAvaliacoes');
         
-        if (avaliacoes.length === 0) {
+        console.log("Avaliações recebidas:", avaliacoes);
+
+        if (!avaliacoes || avaliacoes.length === 0) {
             lista.innerHTML = '<p style="color:#777; font-style:italic;">Este produto ainda não tem avaliações. Seja o primeiro!</p>';
             return;
         }
@@ -100,16 +104,17 @@ async function carregarAvaliacoes() {
         lista.innerHTML = avaliacoes.map(av => `
             <div class="review-item">
                 <div class="review-header">
-                    <span class="review-author">${av.nomeCliente}</span>
+                    <span class="review-author">${av.nomeCliente || 'Cliente Anônimo'}</span>
                     <span class="review-date">${formatarData(av.data)}</span>
                 </div>
                 <div class="review-stars">${'⭐'.repeat(av.nota)}</div>
-                <p>${av.comentario}</p>
+                <p>${av.comentario || ''}</p>
             </div>
         `).join('');
 
     } catch (error) {
-        console.warn("Erro ao carregar avaliações", error);
+        console.warn("Erro ao carregar avaliações:", error);
+        lista.innerHTML = '<p>Não foi possível carregar as avaliações.</p>';
     }
 }
 
