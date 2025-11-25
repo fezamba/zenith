@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarCarrinho();
     
     $('#btnCheckout').addEventListener('click', () => {
-        if (carrinhoAtual && carrinhoAtual.itens.length > 0) {
+        if (carrinhoAtual && carrinhoAtual.itens && carrinhoAtual.itens.length > 0) {
             window.location.href = 'checkout.html';
         } else {
             alert("Seu carrinho está vazio.");
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function atualizarHeader() {
     if (Auth.isLogado()) {
-        const user = Auth.getDadosUsuario();
     } else {
         alert("Faça login para ver seu carrinho.");
         window.location.href = 'tela_login.html';
@@ -51,13 +50,25 @@ async function carregarCarrinho() {
         }
 
         renderizarItens(dados.itens);
-        atualizarTotais(dados.valorTotal);
+        
+        let total = dados.valorTotal;
+        if (total === undefined || total === null) {
+            total = calcularTotalLocal(dados.itens);
+        }
+        atualizarTotais(total);
+        
         cartContent.style.display = 'grid';
 
     } catch (error) {
         console.error(error);
         loading.innerHTML = `<p style="color:red">Erro ao carregar carrinho: ${error.message}</p>`;
     }
+}
+
+function calcularTotalLocal(itens) {
+    return itens.reduce((acc, item) => {
+        return acc + (item.precoUnitario * item.quantidade);
+    }, 0);
 }
 
 function renderizarItens(itens) {
@@ -95,7 +106,8 @@ function renderizarItens(itens) {
 }
 
 function atualizarTotais(valorTotal) {
-    const formatado = formatarMoeda(valorTotal);
+    const valor = Number(valorTotal) || 0;
+    const formatado = formatarMoeda(valor);
     elSubtotal.innerText = formatado;
     elTotal.innerText = formatado;
 }
