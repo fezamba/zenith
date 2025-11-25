@@ -23,13 +23,13 @@ async function carregarResumo() {
     try {
         const carrinho = await Api.carrinho.buscar();
         
-        if(!carrinho || !carrinho.itens.length) {
+        if(!carrinho || !carrinho.itens || carrinho.itens.length === 0) {
             alert("Seu carrinho está vazio.");
             window.location.href = 'home.html';
             return;
         }
 
-        valorTotalCarrinho = carrinho.valorTotal;
+        valorTotalCarrinho = carrinho.valorTotal || calcularTotalLocal(carrinho.itens);
 
         listaResumo.innerHTML = carrinho.itens.map(item => `
             <div class="summary-item-row">
@@ -41,9 +41,13 @@ async function carregarResumo() {
         recalcularTotal();
 
     } catch (e) {
-        console.error(e);
-        alert("Erro ao carregar pedido.");
+        console.error("Erro ao carregar carrinho:", e);
+        alert("Erro ao carregar pedido: " + e.message);
     }
+}
+
+function calcularTotalLocal(itens) {
+    return itens.reduce((acc, item) => acc + (item.precoUnitario * item.quantidade), 0);
 }
 
 function recalcularTotal() {
@@ -52,8 +56,10 @@ function recalcularTotal() {
 
     if (checkPontos.checked) {
         elDesconto.innerText = "(Calculado no fechamento)";
+        elDesconto.style.color = "green";
     } else {
         elDesconto.innerText = "- R$ 0,00";
+        elDesconto.style.color = "inherit";
     }
 
     elSubtotal.innerText = formatarMoeda(valorTotalCarrinho);
@@ -61,10 +67,10 @@ function recalcularTotal() {
 }
 
 async function finalizarPedido() {
-    const enderecoId = $('#enderecoId').value;
+    const enderecoIdVal = $('#enderecoId').value;
     const usarPontos = checkPontos.checked;
 
-    if(!enderecoId) {
+    if(!enderecoIdVal) {
         alert("Por favor, informe o ID do endereço.");
         return;
     }
@@ -73,15 +79,20 @@ async function finalizarPedido() {
         btnConfirmar.disabled = true;
         btnConfirmar.innerText = "Processando...";
 
+        console.log("Enviando pedido...", { enderecoId: parseInt(enderecoIdVal), usarZenithPoints: usarPontos });
+
         const pedido = await Api.pedidos.checkout({
-            enderecoId: parseInt(enderecoId),
+            enderecoId: parseInt(enderecoIdVal),
             usarZenithPoints: usarPontos
         });
+
+        console.log("Pedido criado com sucesso:", pedido);
 
         $('#numeroPedido').innerText = `#${pedido.id}`;
         $('#modalSucesso').style.display = 'flex';
 
     } catch (error) {
+        console.error("Erro no checkout:", error);
         alert("Erro ao finalizar: " + error.message);
         btnConfirmar.disabled = false;
         btnConfirmar.innerText = "CONFIRMAR PEDIDO";
