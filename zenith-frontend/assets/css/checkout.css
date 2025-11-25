@@ -89,3 +89,8 @@
 @media (max-width: 768px) {
     .checkout-grid { grid-template-columns: 1fr; }
 }
+
+.page-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
