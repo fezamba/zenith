@@ -37,6 +37,7 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
 * **Concorrência:** 100 usuários simultâneos.
 
 **Gráficos da Medição 1:**
+
 ![Concorrência M1](graficos/m1_busca_vus.png)
 ![Vazão M1](graficos/m1_busca_rps.png)
 ![Latência M1](graficos/m1_busca_lat.png)
@@ -54,6 +55,7 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
 * **Concorrência:** 100 usuários simultâneos.
 
 **Gráficos da Medição 2:**
+
 ![Concorrência M2](graficos/m2_busca_vus.png)
 ![Vazão M2](graficos/m2_busca_rps.png)
 ![Latência M2](graficos/m2_busca_lat.png)
@@ -98,6 +100,7 @@ Este cenário avaliou a capacidade de **escrita** e transações completas. Cada
 * **Concorrência:** 100 usuários simultâneos.
 
 **Gráficos da Medição 1:**
+
 ![Concorrência M1](graficos/m1_cart_vus.png)
 ![Vazão M1](graficos/m1_cart_rps.png)
 ![Latência M1](graficos/m1_cart_lat.png)
@@ -118,6 +121,7 @@ Este cenário avaliou a capacidade de **escrita** e transações completas. Cada
 * **Concorrência:** 100 usuários simultâneos.
 
 **Gráficos da Medição 2:**
+
 ![Concorrência M2](graficos/m2_cart_vus.png)
 ![Vazão M2](graficos/m2_cart_rps.png)
 ![Latência M2](graficos/m2_cart_lat.png)
