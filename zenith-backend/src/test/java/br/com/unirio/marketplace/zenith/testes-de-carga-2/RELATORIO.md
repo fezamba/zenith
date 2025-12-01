@@ -24,7 +24,7 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
 * **Código de medição:** [`teste-busca.js`](teste-busca.js)
 
 **Descrição das configurações:**
-* **Ambiente:** Desenvolvimento Local (Docker).
+* **Ambiente:** Desenvolvimento Local.
 * **Hardware:** Ryzen 7 5800x, 16GB RAM.
 * **Cenário:** Carga progressiva até 100 VUs.
 
@@ -69,8 +69,8 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
 ### Melhorias/otimizações
 Implementação de **MySQL Full-Text Search** para indexação nativa e busca performática.
 * **Arquivos modificados:**
-    * `ProdutoRepository.java`: Adição de query nativa `MATCH(...) AGAINST(...)`.
-    * `ProdutoService.java`: Lógica condicional para usar Full-Text quando houver termo de busca.
+    * [`ProdutoRepository.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/repository/ProdutoRepository.java): Adição de query nativa `MATCH(...) AGAINST(...)`.
+    * [`ProdutoService.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/service/ProdutoService.java): Lógica condicional para usar Full-Text quando houver termo de busca.
 
 ---
 
@@ -126,7 +126,7 @@ Este cenário avaliou a capacidade de **escrita** e transações completas. Cada
 ![Vazão M2](graficos/m2_cart_rps.png)
 ![Latência M2](graficos/m2_cart_lat.png)
 
-* **Eliminação total dos travamentos.**
+* *Eliminação total dos travamentos.*
 
 ### GRÁFICOS comparativos das medições feitas
 
