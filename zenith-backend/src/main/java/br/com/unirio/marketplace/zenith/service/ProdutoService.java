@@ -37,17 +37,19 @@ public class ProdutoService {
     @Transactional(readOnly = true)
     public List<ProdutoDTO> listarTodosProdutos(String termo, Integer categoriaId, BigDecimal precoMin, BigDecimal precoMax, String statusSelo) {
         
+        if (termo != null && !termo.isBlank()) {
+            String termoFormatado = termo.trim() + "*"; 
+            
+            return produtoRepository.buscarFullText(termoFormatado)
+                    .stream()
+                    .map(ProdutoDTO::new)
+                    .collect(Collectors.toList());
+        }
+
         Specification<Produto> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             predicates.add(criteriaBuilder.equal(root.get("status"), "ATIVO"));
-
-            if (termo != null && !termo.isBlank()) {
-                predicates.add(criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("nome")), 
-                    "%" + termo.toLowerCase() + "%"
-                ));
-            }
 
             if (categoriaId != null) {
                 predicates.add(criteriaBuilder.equal(root.get("categoria").get("id"), categoriaId));

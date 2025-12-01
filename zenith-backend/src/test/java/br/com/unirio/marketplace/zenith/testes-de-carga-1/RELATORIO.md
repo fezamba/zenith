@@ -19,8 +19,8 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
 * **Tipo de operações:** Leitura (`GET /api/produtos`)
 * **Arquivos envolvidos:**
     * [`ProdutoController.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/controller/ProdutoController.java)
-    * [`ProdutoService.java`](../../../../../../../../java/br/com/unirio/marketplace/zenith/service/ProdutoService.java)
-    * [`ProdutoRepository.java`](../../../../../../../../java/br/com/unirio/marketplace/zenith/repository/ProdutoRepository.java)
+    * [`ProdutoService.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/service/ProdutoService.java)
+    * [`ProdutoRepository.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/repository/ProdutoRepository.java)
 * **Código de medição:** [`teste-busca.js`](teste-busca.js)
 
 ### Resultados do Teste de Carga (SLA)
@@ -44,9 +44,8 @@ Abaixo apresenta-se a evolução temporal das métricas. Observe como a latênci
 
 1.  **Alta Eficiência de Leitura:** O gráfico de latência manteve-se plano e próximo de zero (~7ms) mesmo durante o pico de 100 usuários. Isso indica que, para o volume de dados atual, o MySQL está a responder de forma extremamente eficiente, provavelmente servindo dados via cache de memória (Buffer Pool).
 2.  **Escalabilidade Linear:** O gráfico de vazão (RPS) acompanhou perfeitamente a curva de concorrência. Não houve degradação de performance, sugerindo que o gargalo atual não é o banco de dados nem a CPU do servidor para operações de leitura simples.
-3.  **Risco Futuro (Full Text Search):** A busca atual utiliza LIKE %termo% no SQL. Embora rápido agora, este método impede o uso eficiente de índices B-Tree tradicionais, forçando o banco a ler todos os registos (Full Table Scan). Com o crescimento do catálogo para milhões de produtos, esta operação tornar-se-á insustentável.
-    * **Solução Proposta:** Migrar a funcionalidade de busca para tecnologias específicas de indexação textual, como ElasticSearch.
-
+3.  **Risco Futuro (Full Text Search):** A busca atual utiliza `LIKE %termo%` no SQL. Embora rápido agora, este método impede o uso eficiente de índices B-Tree tradicionais, forçando o banco a ler todos os registos (Full Table Scan). Com o crescimento do catálogo para milhões de produtos, esta operação tornar-se-á insustentável.
+    * **Solução Proposta:** Substituir a busca padrão por índices **Full-Text nativos do MySQL**. Esta abordagem permite buscas textuais indexadas e performáticas sem a complexidade de infraestrutura adicional.
 ---
 
 ## 2. Serviço: Fluxo de Compra
@@ -84,5 +83,5 @@ Os gráficos abaixo revelam picos ("spikes") de latência correlacionados à ent
 ### LEVANTAMENTO DE HIPÓTESES dos potenciais gargalos
 
 1.  **Custo Computacional (CPU):** O processo de registo utiliza `BCrypt` para *hashing* de senhas. Esta operação é intencionalmente lenta e intensiva em CPU. Sob alta concorrência (100 VUs a criar contas), a CPU da aplicação torna-se o gargalo antes mesmo do banco de dados.
-2.  **Operações Síncronas:** A adição ao carrinho é uma operação bloqueante. Embora o MongoDB tenha respondido bem (latência média ~69ms), em picos extremos de tráfego (ex: Black Friday), a acumulação de latência na escrita pode esgotar o pool de threads do servidor web, impedindo novos acessos.
-    * **Solução Proposta:** Implementar uma arquitetura assíncrona utilizando filas de mensagens (como RabbitMQ ou Kafka) para desacoplar a receção do pedido de compra do processamento efetivo no banco de dados, garantindo resposta imediata ao utilizador.
+2.  **Operações Síncronas:** A adição ao carrinho e o checkout são operações bloqueantes. Embora o MongoDB tenha respondido bem, em picos extremos de tráfego, a acumulação de latência na escrita e em integrações pode esgotar o pool de threads do servidor web.
+    * **Solução Proposta:** Implementar processamento assíncrono utilizando **Spring `@Async`**. Isto permite mover tarefas pesadas (como cálculo de pontos, validações complexas ou envio de e-mails) para *threads* em segundo plano, garantindo uma resposta imediata ao utilizador sem a sobrecarga de gerir filas externas complexas.
