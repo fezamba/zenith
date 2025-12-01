@@ -23,9 +23,6 @@ Este cenário avaliou a performance de leitura do catálogo, simulando utilizado
     * [`ProdutoRepository.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/repository/ProdutoRepository.java)
 * **Código de medição:** [`teste-busca.js`](teste-busca.js)
 
-**Descrição das configurações:**
-* **Ambiente:** Desenvolvimento Local.
-* **Hardware:** Ryzen 7 5800x, 16GB RAM.
 * **Cenário:** Carga progressiva até 100 VUs.
 
 ### MEDIÇÃO 1 (Original)
@@ -86,8 +83,6 @@ Este cenário avaliou a capacidade de **escrita** e transações completas. Cada
     * [`Carrinho.java`](../../../../../../../../main/java/br/com/unirio/marketplace/zenith/model/mongo/Carrinho.java)
 * **Código de medição:** [`teste-carrinho.js`](teste-carrinho.js)
 
-**Descrição das configurações:**
-* **Ambiente:** Desenvolvimento Local.
 * **Cenário:** Teste de estresse com criação dinâmica de usuários.
 
 ### MEDIÇÃO 1 (Original)
