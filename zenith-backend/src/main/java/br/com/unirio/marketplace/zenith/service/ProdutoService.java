@@ -174,6 +174,18 @@ public class ProdutoService {
     }
 
     @Transactional
+    public void ativarProduto(Integer vendedorId, Integer produtoId) {
+        Produto produto = validarDonoProduto(vendedorId, produtoId);
+        
+        if (!"ATIVO".equals(produto.getCategoria().getStatus())) {
+            throw new RegistroDuplicadoException("Não é possível ativar um produto cuja categoria está inativa.");
+        }
+
+        produto.setStatus("ATIVO");
+        produtoRepository.save(produto);
+    }
+
+    @Transactional
     public ProdutoDTO solicitarSelo(Integer vendedorId, Integer produtoId, SolicitarSeloDTO dto) {
         Produto produto = validarDonoProduto(vendedorId, produtoId);
         if ("PENDENTE".equals(produto.getStatusSelo()) || "APROVADO".equals(produto.getStatusSelo())) {

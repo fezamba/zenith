@@ -60,6 +60,14 @@ public class VendedorController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/produtos/{id}/ativar")
+    public ResponseEntity<Void> ativarProduto(Authentication authentication,
+                                              @PathVariable Integer id) {
+        Integer vendedorId = getVendedorIdDoToken(authentication);
+        produtoService.ativarProduto(vendedorId, id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/pedidos")
     public ResponseEntity<List<PedidoDTO>> listarMeusPedidos(Authentication authentication) {
         Integer vendedorId = getVendedorIdDoToken(authentication);

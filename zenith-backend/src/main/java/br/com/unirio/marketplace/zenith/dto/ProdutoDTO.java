@@ -15,9 +15,11 @@ public class ProdutoDTO {
     private String descricao;
     private BigDecimal preco;
     private int estoque;
+    private String status;
     private String statusSelo;
     private String nomeCategoria;
     private String nomeVendedor;
+    private Integer vendedorId;
 
     public ProdutoDTO(Produto produto) {
         this.id = produto.getId();
@@ -25,8 +27,18 @@ public class ProdutoDTO {
         this.descricao = produto.getDescricao();
         this.preco = produto.getPreco();
         this.estoque = produto.getEstoque();
+        this.status = produto.getStatus();
         this.statusSelo = produto.getStatusSelo();
         this.nomeCategoria = produto.getCategoria().getNome();
         this.nomeVendedor = produto.getVendedor().getNome();
+
+        if (produto.getCategoria() != null) {
+            this.nomeCategoria = produto.getCategoria().getNome();
+        }
+        
+        if (produto.getVendedor() != null) {
+            this.nomeVendedor = produto.getVendedor().getNome();
+            this.vendedorId = produto.getVendedor().getId();
+        }
     }
 }

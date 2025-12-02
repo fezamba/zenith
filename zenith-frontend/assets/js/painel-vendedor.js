@@ -28,12 +28,15 @@ function verificarPermissao() {
 
 function renderizarHeader() {
     const user = Auth.getDadosUsuario();
-    $('#menuUsuario').innerHTML = `
-        <span style="margin-right:15px; font-weight:bold;">Olá, ${user.sub}</span>
-        <a href="home.html" class="btn btn-outline">Ir para Loja</a>
-        <button id="btnSair" class="btn" style="background:#d32f2f; color:white; margin-left:10px">Sair</button>
-    `;
-    $('#btnSair').addEventListener('click', Auth.logout);
+    const menu = $('#menuUsuario');
+    if(menu) {
+        menu.innerHTML = `
+            <span style="margin-right:15px; font-weight:bold;">Olá, ${user.sub}</span>
+            <a href="home.html" class="btn btn-outline">Ir para Loja</a>
+            <button id="btnSair" class="btn" style="background:#d32f2f; color:white; margin-left:10px">Sair</button>
+        `;
+        document.getElementById('btnSair').addEventListener('click', Auth.logout);
+    }
 }
 
 function configurarTabs() {
@@ -52,15 +55,21 @@ function configurarTabs() {
 async function carregarProdutos() {
     try {
         const produtos = await Api.vendedor.meusProdutos();
-        loadingProdutos.style.display = 'none';
+        if(loadingProdutos) loadingProdutos.style.display = 'none';
 
-        if (produtos.length === 0) {
-            emptyProdutos.style.display = 'block';
+        if (!produtos || produtos.length === 0) {
+            if(emptyProdutos) emptyProdutos.style.display = 'block';
+            listaProdutos.innerHTML = '';
             return;
         }
 
-        listaProdutos.innerHTML = produtos.map(prod => `
-            <tr>
+        if(emptyProdutos) emptyProdutos.style.display = 'none';
+
+        listaProdutos.innerHTML = produtos.map(prod => {
+            const isAtivo = prod.status === 'ATIVO';
+
+            return `
+            <tr style="${!isAtivo ? 'opacity: 0.6; background-color: #f9f9f9;' : ''}">
                 <td>#${prod.id}</td>
                 <td>
                     <strong>${prod.nome}</strong><br>
@@ -68,24 +77,31 @@ async function carregarProdutos() {
                 </td>
                 <td>${formatarMoeda(prod.preco)}</td>
                 <td>${prod.estoque} un</td>
-                <td><span class="status-badge ${prod.status === 'ATIVO' ? 'status-ativo' : 'status-inativo'}">${prod.status}</span></td>
+                <td>
+                    <span class="status-badge ${isAtivo ? 'status-ativo' : 'status-inativo'}">
+                        ${prod.status || 'INATIVO'} </span>
+                </td>
                 <td>
                     ${renderizarStatusSelo(prod)}
                 </td>
                 <td>
-                    <button class="action-btn" onclick="alert('Editar em breve!')">✏️</button>
-                    <button class="action-btn btn-danger btn-excluir" data-id="${prod.id}">🗑️</button>
-                    ${prod.statusSelo === 'NAO_SOLICITADO' ? 
-                        `<button class="action-btn btn-selo" data-id="${prod.id}" title="Solicitar Selo">🏅</button>` : ''}
+                    <button class="action-btn" onclick="alert('Editar em breve!')" title="Editar">✏️</button>
+                    
+                    ${isAtivo 
+                        ? `<button class="action-btn btn-danger" onclick="desativarProduto(${prod.id})" title="Desativar">❌</button>`
+                        : `<button class="action-btn" style="color:green; border-color:green;" onclick="ativarProduto(${prod.id})" title="Ativar">✅</button>`
+                    }
+
+                    ${isAtivo && prod.statusSelo === 'NAO_SOLICITADO' ? 
+                        `<button class="action-btn btn-selo" onclick="solicitarSelo(${prod.id})" title="Solicitar Selo">🏅</button>` : ''}
                 </td>
             </tr>
-        `).join('');
-
-        configurarBotoesProduto();
+            `;
+        }).join('');
 
     } catch (error) {
         console.error(error);
-        loadingProdutos.innerText = "Erro ao carregar produtos.";
+        if(loadingProdutos) loadingProdutos.innerText = "Erro ao carregar produtos.";
     }
 }
 
@@ -96,37 +112,44 @@ function renderizarStatusSelo(prod) {
     return '<span style="color:#ccc">-</span>';
 }
 
-function configurarBotoesProduto() {
-    document.querySelectorAll('.btn-excluir').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            if(confirm("Tem certeza que deseja desativar este produto? Ele não aparecerá mais na loja.")) {
-                try {
-                    await Api.vendedor.inativarProduto(e.target.dataset.id);
-                    carregarProdutos(); // Recarrega a lista
-                } catch (err) {
-                    alert("Erro ao desativar: " + err.message);
-                }
-            }
-        });
-    });
+window.desativarProduto = async (id) => {
+    if(confirm("Deseja desativar este produto? Ele deixará de aparecer na loja.")) {
+        try {
+            await Api.vendedor.desativarProduto(id); // Chama DELETE (que agora é soft delete)
+            carregarProdutos();
+        } catch (err) {
+            alert("Erro: " + err.message);
+        }
+    }
+};
 
-    document.querySelectorAll('.btn-selo').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.target.dataset.id;
-            window.location.href = `solicitacao-selo.html?produtoId=${id}`;
-        });
-    });
-}
+window.ativarProduto = async (id) => {
+    if(confirm("Deseja reativar a venda deste produto?")) {
+        try {
+            await Api.vendedor.ativarProduto(id); // Chama PATCH
+            carregarProdutos();
+        } catch (err) {
+            alert("Erro: " + err.message);
+        }
+    }
+};
+
+window.solicitarSelo = (id) => {
+    window.location.href = `solicitacao-selo.html?produtoId=${id}`;
+};
 
 async function carregarVendas() {
     try {
         const vendas = await Api.vendedor.meusPedidos();
-        loadingVendas.style.display = 'none';
+        if(loadingVendas) loadingVendas.style.display = 'none';
 
         if (!vendas || vendas.length === 0) {
-            emptyVendas.style.display = 'block';
+            if(emptyVendas) emptyVendas.style.display = 'block';
+            listaVendas.innerHTML = '';
             return;
         }
+        
+        if(emptyVendas) emptyVendas.style.display = 'none';
 
         listaVendas.innerHTML = vendas.map(pedido => `
             <tr>
@@ -137,31 +160,26 @@ async function carregarVendas() {
                 <td><span class="status-badge status-pendente">${pedido.status}</span></td>
                 <td>
                     ${pedido.status === 'PAGAMENTO_APROVADO' ? 
-                        `<button class="btn btn-primary btn-sm btn-enviar" data-id="${pedido.id}">Marcar Enviado</button>` : 
+                        `<button class="btn btn-primary btn-sm" onclick="enviarPedido(${pedido.id})">Marcar Enviado</button>` : 
                         '-'}
                 </td>
             </tr>
         `).join('');
         
-        configurarBotoesVenda();
-
     } catch (error) {
         console.error(error);
-        loadingVendas.innerText = "Nenhuma venda encontrada.";
+        if(loadingVendas) loadingVendas.innerText = "Nenhuma venda encontrada.";
     }
 }
 
-function configurarBotoesVenda() {
-    document.querySelectorAll('.btn-enviar').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            if(confirm("Confirmar envio do pedido?")) {
-                try {
-                    await Api.vendedor.atualizarStatusPedido(e.target.dataset.id, 'ENVIADO');
-                    carregarVendas();
-                } catch (err) {
-                    alert("Erro: " + err.message);
-                }
-            }
-        });
-    });
-}
+window.enviarPedido = async (id) => {
+    if(confirm("Confirmar envio do pedido?")) {
+        try {
+            await Api.vendedor.atualizarStatusPedido(id, 'ENVIADO');
+            alert("Pedido marcado como enviado!");
+            carregarVendas();
+        } catch (err) {
+            alert("Erro: " + err.message);
+        }
+    }
+};

@@ -75,7 +75,8 @@ export const Api = {
         meusProdutos: () => request('/vendedor/produtos'),
         criarProduto: (prod) => request('/vendedor/produtos', 'POST', prod),
         editarProduto: (id, prod) => request(`/vendedor/produtos/${id}`, 'PUT', prod),
-        inativarProduto: (id) => request(`/vendedor/produtos/${id}`, 'DELETE'),
+        ativarProduto: (id) => request(`/vendedor/produtos/${id}/ativar`, 'PATCH'),
+        desativarProduto: (id) => request(`/vendedor/produtos/${id}`, 'DELETE'),        
         
         meusPedidos: () => request('/vendedor/pedidos'),
         atualizarStatusPedido: (id, status) => request(`/vendedor/pedidos/${id}/status`, 'PATCH', { novoStatus: status }),
