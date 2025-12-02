@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Central de Ajuda - Zenith</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/ajuda.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <button id="btnVoltar" class="btn-icon-back" title="Voltar">⬅</button>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">
+                        <h1>Zenith</h1>
+                    </a>
+                </div>
+                <div class="search-bar" style="visibility: hidden;"></div> 
+                <div class="user-actions" id="menuUsuario"></div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="help-hero">
+        <div class="container">
+            <h2>Como podemos ajudar?</h2>
+            <p>Tire suas dúvidas sobre compras, pagamentos e o Zenith.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        
+        <div class="faq-container">
+            <h3 style="margin-bottom: 25px; text-align: center; color: #333;">Perguntas Frequentes</h3>
+
+            <div class="faq-item">
+                <button class="faq-question">Como acumular Zenith Points?</button>
+                <div class="faq-answer">
+                    <p>É simples! Toda vez que você avalia um produto que comprou e recebeu, você ganha 10 Zenith Points. Esses pontos podem ser trocados por descontos nas suas próximas compras.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Quais são as formas de pagamento?</button>
+                <div class="faq-answer">
+                    <p>Aceitamos Cartão de Crédito, Boleto Bancário e PIX. O pagamento é processado de forma segura e a aprovação via PIX é instantânea.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Como sei se um produto é sustentável?</button>
+                <div class="faq-answer">
+                    <p>Procure pelo selo "🌱 Produto Sustentável" ou "📍 Produção Local" na página de detalhes do produto. Nossos vendedores parceiros passam por uma validação rigorosa para obter esses selos.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Como funciona a entrega?</button>
+                <div class="faq-answer">
+                    <p>O prazo de entrega varia de acordo com o seu endereço e a localização do vendedor. Você pode acompanhar o status do seu pedido diretamente na aba "Meus Pedidos" no seu perfil.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <div class="contact-icon">🎧</div>
+            <h3>Ainda precisa de ajuda?</h3>
+            <p style="margin-bottom: 20px; color: #666;">Nossa equipe de suporte está pronta para te atender.</p>
+            
+            <button onclick="alert('Se vira! 😂')" class="btn btn-primary">
+                Entrar em Contato
+            </button>
+        </div>
+
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: #777; font-size: 0.9rem;">
+        &copy; 2025 Zenith Marketplace. Todos os direitos reservados.
+    </footer>
+
+    <script type="module" src="../assets/js/header.js"></script>
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
