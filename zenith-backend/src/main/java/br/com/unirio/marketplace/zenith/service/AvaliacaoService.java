@@ -3,6 +3,7 @@ package br.com.unirio.marketplace.zenith.service;
 import br.com.unirio.marketplace.zenith.dto.AvaliacaoDTO;
 import br.com.unirio.marketplace.zenith.dto.AvaliacaoInputDTO;
 import br.com.unirio.marketplace.zenith.dto.AvaliacaoStatsDTO;
+import br.com.unirio.marketplace.zenith.exception.RegistroDuplicadoException;
 import br.com.unirio.marketplace.zenith.exception.ResourceNotFoundException;
 import br.com.unirio.marketplace.zenith.model.Cliente;
 import br.com.unirio.marketplace.zenith.model.mongo.Avaliacao;
@@ -41,6 +42,10 @@ public class AvaliacaoService {
 
         if (!comprouErecebeu) {
             throw new SecurityException("A avaliação só é permitida para produtos comprados e já entregues.");
+        }
+
+        if (avaliacaoRepository.existsByClienteIdAndProdutoId(clienteId, dto.getProdutoId())) {
+            throw new RegistroDuplicadoException("Você já avaliou este produto.");
         }
 
         Avaliacao avaliacao = new Avaliacao();
