@@ -91,10 +91,10 @@ async function carregarAvaliacoes() {
     lista.innerHTML = '<p>Carregando avaliações...</p>';
 
     try {
-        console.log("Buscando avaliações para o produto ID:", produtoId);
-        const avaliacoes = await Api.avaliacoes.listarDoProduto(produtoId);
+        const stats = await Api.avaliacoes.listarDoProduto(produtoId);
         
-        console.log("Avaliações recebidas:", avaliacoes);
+        // CORREÇÃO: Acessamos a lista dentro do objeto stats
+        const avaliacoes = stats.avaliacoes; 
 
         if (!avaliacoes || avaliacoes.length === 0) {
             lista.innerHTML = '<p style="color:#777; font-style:italic;">Este produto ainda não tem avaliações. Seja o primeiro!</p>';
