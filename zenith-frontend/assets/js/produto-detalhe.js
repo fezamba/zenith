@@ -93,6 +93,7 @@ async function carregarAvaliacoes() {
     try {
         const stats = await Api.avaliacoes.listarDoProduto(produtoId);
         
+        // CORREÇÃO: Acessamos a lista dentro do objeto stats
         const avaliacoes = stats.avaliacoes; 
 
         if (!avaliacoes || avaliacoes.length === 0) {

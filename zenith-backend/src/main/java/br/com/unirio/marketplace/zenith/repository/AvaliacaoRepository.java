@@ -12,6 +12,4 @@ public interface AvaliacaoRepository extends MongoRepository<Avaliacao, String> 
     List<Avaliacao> findByProdutoId(Integer produtoId);
 
     List<Avaliacao> findByClienteId(Integer clienteId);
-
-    boolean existsByClienteIdAndProdutoId(Integer clienteId, Integer produtoId);
 }
