@@ -17,6 +17,8 @@ public class ProdutoDTO {
     private int estoque;
     private String status;
     private String statusSelo;
+    private String tipoSelo;
+    private String justificativaSelo;
     private String nomeCategoria;
     private String nomeVendedor;
     private Integer vendedorId;
@@ -29,6 +31,8 @@ public class ProdutoDTO {
         this.estoque = produto.getEstoque();
         this.status = produto.getStatus();
         this.statusSelo = produto.getStatusSelo();
+        this.tipoSelo = produto.getTipoSelo();
+        this.justificativaSelo = produto.getJustificativaSelo();
         this.nomeCategoria = produto.getCategoria().getNome();
         this.nomeVendedor = produto.getVendedor().getNome();
 

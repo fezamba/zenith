@@ -70,24 +70,52 @@ async function carregarVendedores() {
 async function carregarSelos() {
     try {
         const lista = await Api.admin.selosPendentes();
-        if(lista.length > 0) $('#msgSelos').style.display = 'none';
+        const msg = $('#msgSelos');
 
-        listaSelos.innerHTML = lista.map(p => `
+        if(!lista || lista.length === 0) {
+            listaSelos.innerHTML = '';
+            if(msg) msg.style.display = 'block';
+            return;
+        }
+        if(msg) msg.style.display = 'none';
+
+        listaSelos.innerHTML = lista.map(p => {
+            const isLocal = p.tipoSelo === 'LOCAL';
+            const badgeStyle = isLocal 
+                ? 'background-color: #e1f5fe; color: #0277bd; border: 1px solid #b3e5fc;' // Azul
+                : 'background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9;'; // Verde
+            
+            const textoSelo = isLocal ? '📍 Local' : '🌱 Sustentável';
+
+            return `
             <tr>
-                <td>${p.nome}</td>
+                <td><strong>${p.nome}</strong></td>
                 <td>${p.nomeVendedor || 'ID: ' + p.vendedorId}</td>
-                <td><em>"${p.justificativaSelo || ''}"</em></td>
+                
                 <td>
-                    <button class="btn btn-primary btn-sm" onclick="aprovarSelo(${p.id}, 'APROVADO')">✅</button>
-                    <button class="btn btn-outline btn-sm" onclick="aprovarSelo(${p.id}, 'REJEITADO')">❌</button>
+                    <span style="padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: bold; display: inline-block; white-space: nowrap; ${badgeStyle}">
+                        ${textoSelo}
+                    </span>
+                </td>
+                
+                <td style="font-style:italic; color:#666;">"${p.justificativaSelo || ''}"</td>
+                
+                <td>
+                    <div style="display:flex; gap:5px;">
+                        <button class="btn btn-sm btn-primary" onclick="aprovarSelo(${p.id}, 'APROVADO')" title="Aprovar">✅</button>
+                        <button class="btn btn-sm btn-outline" style="color:red; border-color:red" onclick="aprovarSelo(${p.id}, 'REJEITADO')" title="Rejeitar">❌</button>
+                    </div>
                 </td>
             </tr>
-        `).join('');
+            `;
+        }).join('');
 
         window.aprovarSelo = async (id, status) => {
-            if(!confirm(`Definir selo como ${status}?`)) return;
-            await Api.admin.aprovarSelo(id, status);
-            carregarSelos();
+            if(!confirm(`Deseja definir o selo como ${status}?`)) return;
+            try {
+                await Api.admin.aprovarSelo(id, status);
+                carregarSelos();
+            } catch(e) { alert(e.message); }
         };
     } catch (e) { console.error(e); }
 }

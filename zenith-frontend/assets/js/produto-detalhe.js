@@ -69,7 +69,23 @@ async function carregarDetalhes() {
         $('#breadcrumbCategoria').innerText = prod.nomeCategoria || "Categoria";
 
         if (prod.statusSelo === 'APROVADO') {
-            elSelo.innerHTML = `<span class="badge badge-sustentavel" style="font-size:1rem; padding:5px 10px;">🌱 Produto Sustentável Certificado</span>`;
+            let badgeHtml = '';
+            
+            if (prod.tipoSelo === 'LOCAL') {
+                badgeHtml = `
+                    <span class="badge" style="font-size:1rem; padding:5px 10px; background-color:#0288d1; color:white; display:inline-flex; align-items:center; gap:5px;">
+                        📍 Produção Local
+                    </span>`;
+            } else {
+                badgeHtml = `
+                    <span class="badge badge-sustentavel" style="font-size:1rem; padding:5px 10px; display:inline-flex; align-items:center; gap:5px;">
+                        🌱 Produto Sustentável
+                    </span>`;
+            }
+            
+            elSelo.innerHTML = badgeHtml;
+        } else {
+            elSelo.innerHTML = '';
         }
 
         inputQtd.max = prod.estoque;

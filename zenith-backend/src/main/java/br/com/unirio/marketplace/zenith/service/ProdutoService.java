@@ -192,6 +192,9 @@ public class ProdutoService {
             throw new SecurityException("Este produto já possui um selo aprovado ou uma solicitação pendente.");
         }
         produto.setStatusSelo("PENDENTE");
+        
+        produto.setTipoSelo(dto.getTipoSelo());
+
         produto.setJustificativaSelo(dto.getJustificativa());
         Produto produtoSalvo = produtoRepository.save(produto);
         return new ProdutoDTO(produtoSalvo);

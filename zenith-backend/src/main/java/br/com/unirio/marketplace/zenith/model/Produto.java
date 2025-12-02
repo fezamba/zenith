@@ -41,6 +41,9 @@ public class Produto {
     @Column(name = "status_selo")
     private String statusSelo;
 
+    @Column(name = "tipo_selo")
+    private String tipoSelo;
+
     @Column(name = "status", nullable = false)
     private String status;
 
