@@ -91,5 +91,10 @@ export const Api = {
         
         categorias: () => request('/admin/categorias'),
         criarCategoria: (cat) => request('/admin/categorias', 'POST', cat)
+    },
+
+    enderecos: {
+        criar: (dados) => request('/enderecos', 'POST', dados),
+        listar: () => request('/enderecos')
     }
 };

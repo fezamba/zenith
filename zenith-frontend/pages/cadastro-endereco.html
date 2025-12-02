@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Endereço - Zenith</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/tela_login.css"> <link rel="stylesheet" href="../assets/css/cadastro-endereco.css">
+</head>
+<body>
+    <header style="padding: 10px 0; background: transparent; box-shadow: none; position: absolute; width: 100%;">
+        <div class="container">
+            <button id="btnVoltarNav" class="btn-icon-back" style="font-size: 1.2rem; display: flex; align-items: center; gap: 5px;">
+                ⬅ Voltar
+            </button>
+        </div>
+    </header>
+
+    <main class="login-container"> <div class="login-card" style="max-width: 600px;"> <h2 style="margin-bottom: 25px;">📍 Novo Endereço</h2>
+            
+            <form id="formEndereco">
+                <div class="address-grid">
+                    
+                    <div class="form-group full-width">
+                        <label>CEP</label>
+                        <input type="text" id="cep" placeholder="00000-000" required maxlength="9">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Logradouro</label>
+                        <input type="text" id="logradouro" placeholder="Rua, Avenida, Travessa..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Número</label>
+                        <input type="text" id="numero" placeholder="Ex: 123" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Cidade</label>
+                        <input type="text" id="cidade" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Estado (UF)</label>
+                        <input type="text" id="estado" placeholder="UF" required maxlength="2" style="text-transform:uppercase; text-align:center;">
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Endereço</button>
+                    <button type="button" id="btnCancelar" class="btn btn-outline btn-block" style="border-color: #ccc; color: #666;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="../assets/js/cadastro-endereco.js"></script>
+    <script>
+        document.getElementById('btnVoltarNav').addEventListener('click', () => {
+             document.getElementById('btnCancelar').click();
+        });
+    </script>
+</body>
+</html>

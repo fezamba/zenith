@@ -27,17 +27,32 @@
             
             <div class="checkout-form-section">
                 
-                <div class="checkout-card">
+            <div class="checkout-card" style="overflow: visible;"> <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <h3>📍 Endereço de Entrega</h3>
-                    <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">
-                        Selecione o ID do endereço cadastrado.
-                    </p>
-                    <div class="form-group">
-                        <label>ID do Endereço:</label>
-                        <input type="number" id="enderecoId" value="1" min="1" class="input-checkout">
-                        <small>(Nota de DSV: use o ID do seu endereço no banco)</small>
+                    <a href="cadastro-endereco.html" class="btn btn-sm btn-outline" style="text-decoration:none;">
+                        + Novo
+                    </a>
+                </div>
+
+                <div class="form-group" style="position: relative;">
+                    <label>Selecione para onde enviar:</label>
+                    
+                    <input type="hidden" id="enderecoIdSelected" value="">
+
+                    <div class="custom-dropdown" id="dropdownContainer">
+                        <div class="dropdown-selected" id="dropdownSelectedText">
+                            <span>Carregando endereços...</span>
+                            <i class="arrow-icon">▼</i>
+                        </div>
+                        <div class="dropdown-options" id="dropdownOptionsList">
+                            </div>
                     </div>
                 </div>
+                
+                <p id="msgSemEndereco" style="display:none; color:#d32f2f; font-size:0.9rem; margin-top:5px;">
+                    ⚠️ Você ainda não tem endereços cadastrados. Clique em "+ Novo" acima.
+                </p>
+            </div>
 
                 <div class="checkout-card">
                     <h3>💳 Pagamento</h3>
