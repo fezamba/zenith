@@ -18,7 +18,7 @@ async function request(endpoint, method = 'GET', body = null) {
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
 
-        if (response.status === 401 || response.status === 403) {
+        if (response.status === 401) {
             if (!window.location.pathname.includes('login.html')) {
                 console.warn("Sessão expirada.");
                 Auth.logout();
