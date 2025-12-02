@@ -70,19 +70,17 @@ async function carregarDetalhes() {
 
         if (prod.statusSelo === 'APROVADO') {
             let badgeHtml = '';
-            
             if (prod.tipoSelo === 'LOCAL') {
                 badgeHtml = `
-                    <span class="badge" style="font-size:1rem; padding:5px 10px; background-color:#0288d1; color:white; display:inline-flex; align-items:center; gap:5px;">
-                        📍 Produção Local
+                    <span class="badge" style="font-size:1rem; padding:8px 12px; background-color:#0288d1; color:white; display:inline-flex; align-items:center; gap:5px; border-radius:20px;">
+                        📍 Produção Local Certificada
                     </span>`;
             } else {
                 badgeHtml = `
-                    <span class="badge badge-sustentavel" style="font-size:1rem; padding:5px 10px; display:inline-flex; align-items:center; gap:5px;">
-                        🌱 Produto Sustentável
+                    <span class="badge badge-sustentavel" style="font-size:1rem; padding:8px 12px; display:inline-flex; align-items:center; gap:5px; border-radius:20px;">
+                        🌱 Produto Sustentável Certificado
                     </span>`;
             }
-            
             elSelo.innerHTML = badgeHtml;
         } else {
             elSelo.innerHTML = '';

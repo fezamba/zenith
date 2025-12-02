@@ -48,12 +48,13 @@
             </div>
 
             <div class="filter-group">
-                <h3>Selos</h3>
-                <label class="checkbox-label">
-                    <input type="checkbox" id="filtroSelo"> 
-                    🌱 Apenas Sustentáveis
-                </label>
-            </div>
+                    <h3>Selo de Qualidade</h3>
+                    <select id="filtroSelo" class="filter-input">
+                        <option value="">Todos os produtos</option>
+                        <option value="SUSTENTAVEL">🌱 Sustentável</option>
+                        <option value="LOCAL">📍 Produção Local</option>
+                    </select>
+            </div>  
 
             <button id="btnFiltrar" class="btn btn-primary" style="width:100%">Aplicar Filtros</button>
             <button id="btnLimpar" class="btn btn-outline" style="width:100%; margin-top:10px">Limpar</button>

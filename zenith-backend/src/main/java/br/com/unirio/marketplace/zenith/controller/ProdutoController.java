@@ -20,14 +20,16 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> listarTodos(
+    public ResponseEntity<List<ProdutoDTO>> listarProdutos(
             @RequestParam(required = false) String termo,
             @RequestParam(required = false) Integer categoriaId,
             @RequestParam(required = false) BigDecimal precoMin,
             @RequestParam(required = false) BigDecimal precoMax,
-            @RequestParam(required = false) String statusSelo
+            @RequestParam(required = false) String tipoSelo
     ) {
-        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos(termo, categoriaId, precoMin, precoMax, statusSelo);
+        String statusSelo = (tipoSelo != null) ? "APROVADO" : null;
+
+        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos(termo, categoriaId, precoMin, precoMax, statusSelo, tipoSelo);
         return ResponseEntity.ok(produtos);
     }
 

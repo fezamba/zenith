@@ -34,12 +34,11 @@ public class ProdutoService {
         this.vendedorRepository = vendedorRepository;
     }
 
-    @Transactional(readOnly = true)
-    public List<ProdutoDTO> listarTodosProdutos(String termo, Integer categoriaId, BigDecimal precoMin, BigDecimal precoMax, String statusSelo) {
+@Transactional(readOnly = true)
+    public List<ProdutoDTO> listarTodosProdutos(String termo, Integer categoriaId, BigDecimal precoMin, BigDecimal precoMax, String statusSelo, String tipoSelo) {
         
         if (termo != null && !termo.isBlank()) {
             String termoFormatado = termo.trim() + "*"; 
-            
             return produtoRepository.buscarFullText(termoFormatado)
                     .stream()
                     .map(ProdutoDTO::new)
@@ -54,7 +53,6 @@ public class ProdutoService {
             if (categoriaId != null) {
                 predicates.add(criteriaBuilder.equal(root.get("categoria").get("id"), categoriaId));
             }
-
             if (precoMin != null) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("preco"), precoMin));
             }
@@ -63,6 +61,10 @@ public class ProdutoService {
             }
             if (statusSelo != null && !statusSelo.isBlank()) {
                 predicates.add(criteriaBuilder.equal(root.get("statusSelo"), statusSelo.toUpperCase()));
+            }
+            
+            if (tipoSelo != null && !tipoSelo.isBlank()) {
+                predicates.add(criteriaBuilder.equal(root.get("tipoSelo"), tipoSelo.toUpperCase()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

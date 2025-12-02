@@ -2,37 +2,55 @@ import { Api } from './api.js';
 import { Auth } from './auth.js';
 import { formatarMoeda, $ } from './utils.js';
 
+const gridProdutos = $('#gridProdutos');
+const inputSearch = $('#searchInput');
+const inputPrecoMin = $('#precoMin');
+const inputPrecoMax = $('#precoMax');
+const selectSelo = $('#filtroSelo');
+const btnBuscar = $('#btnBuscar');
+const btnFiltrar = $('#btnFiltrar');
+const btnLimpar = $('#btnLimpar');
+
 document.addEventListener('DOMContentLoaded', () => {
     atualizarHeader();
-    carregarCategorias();
-    
-    const params = new URLSearchParams(window.location.search);
-    const termoInicial = params.get('termo');
-    const catInicial = params.get('cat');
-    
-    if (termoInicial) $('#searchInput').value = termoInicial;
-    
-    aplicarFiltros(catInicial);
 
-    // Eventos
-    $('#btnBuscar').addEventListener('click', () => aplicarFiltros());
-    $('#btnFiltrar').addEventListener('click', () => aplicarFiltros());
-    $('#btnLimpar').addEventListener('click', limparFiltros);
-    $('#searchInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') aplicarFiltros();
-    });
+    carregarCategorias(); 
+
+    if (btnBuscar) btnBuscar.addEventListener('click', () => aplicarFiltros());
+    if (btnFiltrar) btnFiltrar.addEventListener('click', () => aplicarFiltros());
+    if (btnLimpar) btnLimpar.addEventListener('click', limparFiltros);
+    
+    if (inputSearch) {
+        inputSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') aplicarFiltros();
+        });
+    }
+
+    if (selectSelo) {
+        selectSelo.addEventListener('change', () => aplicarFiltros());
+    }
 });
 
 function atualizarHeader() {
     const menu = $('#menuUsuario');
+    if (!menu) return;
+
     if (Auth.isLogado()) {
         const user = Auth.getDadosUsuario();
         let html = `<a href="carrinho.html" class="btn btn-outline">🛒 Carrinho</a> <a href="perfil.html" class="btn btn-outline">Conta</a>`;
-        if(user && user.role === 'VENDEDOR') html += `<a href="painel-vendedor.html" class="btn btn-primary">Vendedor</a>`;
-        if(user && user.role === 'ADMIN') html += `<a href="painel-adm.html" class="btn btn-primary">Admin</a>`;
+        
+        if(user && user.role === 'VENDEDOR') {
+            html += `<a href="painel-vendedor.html" class="btn btn-primary" style="margin-left:5px">Vendedor</a>`;
+        }
+        if(user && user.role === 'ADMIN') {
+            html += `<a href="painel-adm.html" class="btn btn-primary" style="margin-left:5px">Admin</a>`;
+        }
+        
         html += `<button id="btnSair" class="btn" style="background:#d32f2f; color:white; margin-left:10px">Sair</button>`;
         menu.innerHTML = html;
-        $('#btnSair').addEventListener('click', Auth.logout);
+        
+        const btnSair = document.getElementById('btnSair');
+        if(btnSair) btnSair.addEventListener('click', Auth.logout);
     } else {
         menu.innerHTML = `<a href="tela_login.html" class="btn btn-outline">Entrar</a>`;
     }
@@ -40,94 +58,116 @@ function atualizarHeader() {
 
 async function carregarCategorias() {
     const container = $('#listaCategorias');
+    if (!container) return;
+
     try {
         const cats = await Api.produtos.listarCategorias();
+        
         if (!cats || cats.length === 0) {
             container.innerHTML = '<p>Nenhuma categoria.</p>';
-            return;
+        } else {
+            container.innerHTML = cats.map(c => `
+                <label style="display:block; margin-bottom:5px; cursor:pointer;">
+                    <input type="radio" name="catFilter" value="${c.id}" style="margin-right:8px;"> 
+                    ${c.nome}
+                </label>
+            `).join('');
         }
-        
-        container.innerHTML = cats.map(c => `
-            <label style="display:block; margin-bottom:5px; cursor:pointer;">
-                <input type="radio" name="catFilter" value="${c.id}" style="margin-right:8px;"> 
-                ${c.nome}
-            </label>
-        `).join('');
         
         const params = new URLSearchParams(window.location.search);
-        if(params.get('cat')) {
-            const radio = document.querySelector(`input[name="catFilter"][value="${params.get('cat')}"]`);
+        const catId = params.get('cat') || params.get('categoriaId');
+        if(catId) {
+            const radio = document.querySelector(`input[name="catFilter"][value="${catId}"]`);
             if(radio) radio.checked = true;
         }
+
+        const termoInicial = params.get('termo') || params.get('busca');
+        if (termoInicial && inputSearch) {
+            inputSearch.value = termoInicial;
+        }
+
+        aplicarFiltros();
+
+    } catch (error) {
+        console.error("Erro ao carregar categorias:", error);
+        container.innerHTML = '<p>Erro ao carregar opções.</p>';
+    }
+}
+
+async function aplicarFiltros() {
+    
+    let termo = inputSearch ? inputSearch.value : '';
+    
+    const radioCat = document.querySelector('input[name="catFilter"]:checked');
+    const cat = radioCat ? radioCat.value : '';
+
+    const min = inputPrecoMin ? inputPrecoMin.value : '';
+    const max = inputPrecoMax ? inputPrecoMax.value : '';
+
+    const selo = selectSelo ? selectSelo.value : '';
+
+    let query = `?termo=${encodeURIComponent(termo)}`;
+    if (cat) query += `&categoriaId=${cat}`;
+    if (min) query += `&precoMin=${min}`;
+    if (max) query += `&precoMax=${max}`;
+    if (selo) query += `&tipoSelo=${selo}`;
+
+    if(gridProdutos) gridProdutos.innerHTML = '<p>Carregando...</p>';
+
+    try {
+        const produtos = await Api.produtos.listar(query);
+        renderizarProdutos(produtos);
     } catch (error) {
         console.error(error);
-        container.innerHTML = '<p>Erro.</p>';
+        if(gridProdutos) gridProdutos.innerHTML = '<p>Erro ao filtrar produtos. Tente novamente.</p>';
     }
 }
 
-async function aplicarFiltros(catIdForcado = null) {
-    const grid = $('#gridProdutos');
-    const contador = $('#contadorProdutos');
-    grid.innerHTML = '<p>Carregando...</p>';
-    
-    try {
-        let query = '?';
-        
-        const catRadio = document.querySelector('input[name="catFilter"]:checked');
-        const catId = catIdForcado || (catRadio ? catRadio.value : null);
-        if (catId) query += `categoriaId=${catId}&`;
+function renderizarProdutos(produtos) {
+    if (!gridProdutos) return;
 
-        const termo = $('#searchInput').value;
-        if(termo) query += `termo=${encodeURIComponent(termo)}&`;
-        
-        const min = $('#precoMin').value;
-        const max = $('#precoMax').value;
-        if(min) query += `precoMin=${min}&`;
-        if(max) query += `precoMax=${max}&`;
-
-        const seloCheckbox = $('#filtroSelo');
-        if(seloCheckbox && seloCheckbox.checked) query += `statusSelo=APROVADO&`;
-
-        const produtos = await Api.produtos.listar(query);
-
-        renderizarProdutos(produtos);
-        
-    } catch (e) {
-        console.error(e);
-        grid.innerHTML = '<p style="color:red">Erro ao buscar.</p>';
-    }
-}
-
-function renderizarProdutos(lista) {
-    const grid = $('#gridProdutos');
-    const contador = $('#contadorProdutos');
-    
-    if(!lista || lista.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px;">Nenhum produto encontrado.</div>';
-        contador.innerText = `0 produtos`;
+    if (!produtos || produtos.length === 0) {
+        gridProdutos.innerHTML = '<p>Nenhum produto encontrado com esses filtros.</p>';
         return;
     }
 
-    contador.innerText = `${lista.length} produtos`;
+    gridProdutos.innerHTML = produtos.map(p => {
+        let seloHtml = '';
+        if (p.statusSelo === 'APROVADO') {
+            if (p.tipoSelo === 'LOCAL') {
+                seloHtml = `<span class="product-badge badge-local" style="position:absolute; top:10px; right:10px;">📍 Local</span>`;
+            } else {
+                seloHtml = `<span class="product-badge badge-sustentavel" style="position:absolute; top:10px; right:10px;">🌱 Sustentável</span>`;
+            }
+        }
 
-    grid.innerHTML = lista.map(p => `
-        <a href="produto-detalhe.html?id=${p.id}" class="product-card">
-            <div class="product-image">📦</div>
-            <div class="product-info">
-                ${p.statusSelo === 'APROVADO' ? '<span class="badge-sustentavel" style="font-size:0.8rem">🌱 Sustentável</span>' : ''}
-                <h3 class="product-title">${p.nome}</h3>
-                <div class="product-price">${formatarMoeda(p.preco)}</div>
-                <small style="color:#888">Vendedor: ${p.nomeVendedor || 'Parceiro'}</small>
+        return `
+        <div class="product-card" onclick="window.location.href='produto-detalhe.html?id=${p.id}'" style="position: relative; cursor: pointer;">
+            ${seloHtml}
+            <div class="product-image">
+                <span style="font-size:3rem">📦</span>
             </div>
-        </a>
-    `).join('');
+            <div class="product-info">
+                <h3>${p.nome}</h3>
+                <p class="product-category">${p.nomeCategoria || 'Geral'}</p>
+                <div class="product-price">${formatarMoeda(p.preco)}</div>
+            </div>
+        </div>
+        `;
+    }).join('');
 }
 
 function limparFiltros() {
-    $('#searchInput').value = '';
-    $('#precoMin').value = '';
-    $('#precoMax').value = '';
-    if($('#filtroSelo')) $('#filtroSelo').checked = false;
+    if(inputSearch) inputSearch.value = '';
+    if(inputPrecoMin) inputPrecoMin.value = '';
+    if(inputPrecoMax) inputPrecoMax.value = '';
+    if(selectSelo) selectSelo.value = '';
+    
     document.querySelectorAll('input[name="catFilter"]').forEach(r => r.checked = false);
+    
+    const url = new URL(window.location);
+    url.search = '';
+    window.history.pushState({}, '', url);
+
     aplicarFiltros();
 }

@@ -1,49 +1,26 @@
 import { Api } from './api.js';
-import { Auth } from './auth.js';
 import { formatarMoeda } from './utils.js';
 
-const menuUsuario = document.getElementById('menuUsuario');
 const listaProdutos = document.getElementById('listaProdutos');
 const listaCategorias = document.getElementById('listaCategorias');
-const searchInput = document.getElementById('searchInput');
+
+const searchInput = document.getElementById('searchInput'); 
 const btnBuscar = document.getElementById('btnBuscar');
 
 document.addEventListener('DOMContentLoaded', () => {
-    atualizarHeader();
+    
     carregarCategorias();
     carregarProdutos();
     
-    btnBuscar.addEventListener('click', realizarBusca);
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') realizarBusca();
-    });
-});
-
-function atualizarHeader() {
-    if (Auth.isLogado()) {
-        const user = Auth.getDadosUsuario();
-        let html = `
-            <a href="carrinho.html" class="btn btn-outline">🛒 Carrinho</a>
-            <a href="perfil.html" class="btn btn-outline">Minha Conta</a>
-        `;
-
-        if (user && user.role === 'VENDEDOR') {
-            html += `<a href="painel-vendedor.html" class="btn btn-primary">Vendedor</a>`;
-        } else if (user && user.role === 'ADMIN') {
-            html += `<a href="painel-adm.html" class="btn btn-primary">Admin</a>`;
-        }
-
-        html += `<button id="btnSair" class="btn" style="background-color:#d32f2f; color:white; margin-left:10px;">Sair</button>`;
-        menuUsuario.innerHTML = html;
-
-        document.getElementById('btnSair').addEventListener('click', Auth.logout);
-    } else {
-        menuUsuario.innerHTML = `
-            <a href="tela_login.html" class="btn btn-outline">Entrar</a>
-            <a href="tela_cadastro.html" class="btn btn-primary">Cadastrar</a>
-        `;
+    if(btnBuscar) {
+        btnBuscar.addEventListener('click', realizarBusca);
     }
-}
+    if(searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') realizarBusca();
+        });
+    }
+});
 
 function realizarBusca() {
     const termo = searchInput.value;
@@ -74,6 +51,7 @@ async function carregarProdutos(termo = '') {
     try {
         listaProdutos.innerHTML = '<p>Buscando...</p>';
         const query = termo ? `?termo=${encodeURIComponent(termo)}` : '';
+        
         const produtos = await Api.produtos.listar(query);
 
         if (!produtos || produtos.length === 0) {
@@ -81,24 +59,28 @@ async function carregarProdutos(termo = '') {
             return;
         }
 
-        listaProdutos.innerHTML = produtos.map(prod => {
-            let selo = '';
-            if (prod.statusSelo === 'APROVADO') {
-                selo = `<div class="badge-container"><span class="badge badge-sustentavel">🌱 Sustentável</span></div>`;
+        listaProdutos.innerHTML = produtos.map(p => {
+            
+            let seloHtml = '';
+            if (p.statusSelo === 'APROVADO') {
+                if (p.tipoSelo === 'LOCAL') {
+                    seloHtml = `<span class="product-badge badge-local" style="position:absolute; top:10px; right:10px;">📍 Local</span>`;
+                } else {
+                    seloHtml = `<span class="product-badge badge-sustentavel" style="position:absolute; top:10px; right:10px;">🌱 Sustentável</span>`;
+                }
             }
 
             return `
-            <a href="produto-detalhe.html?id=${prod.id}" class="product-card">
-                <div class="product-image">📦</div>
-                <div class="product-info">
-                    ${selo}
-                    <h3 class="product-name">${prod.nome}</h3>
-                    <div class="product-price">${formatarMoeda(prod.preco)}</div>
-                    <div class="seller-info">
-                        <span>Vendedor: ${prod.nomeVendedor || 'Parceiro Zenith'}</span>
-                    </div>
+            <div class="product-card" onclick="window.location.href='produto-detalhe.html?id=${p.id}'" style="position:relative; cursor:pointer;">
+                ${seloHtml}
+                <div class="product-image">
+                    <span style="font-size:3rem">📦</span>
                 </div>
-            </a>
+                <div class="product-info">
+                    <h3>${p.nome}</h3>
+                    <div class="product-price">${formatarMoeda(p.preco)}</div>
+                </div>
+            </div>
             `;
         }).join('');
 
