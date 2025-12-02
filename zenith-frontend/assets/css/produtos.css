@@ -6,6 +6,14 @@
     margin-bottom: 60px;
 }
 
+.filters {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+
 .filters-sidebar {
     background: var(--white);
     padding: 20px;
@@ -14,14 +22,18 @@
     height: fit-content;
 }
 
-.filter-group {
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
+.filter-group h3 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .filter-group h3 {
     font-size: 1rem;
+    margin-top: 15px;
     margin-bottom: 15px;
     color: var(--text-dark);
 }
@@ -35,6 +47,48 @@
 
 .filter-options input[type="radio"] {
     margin-right: 8px;
+}
+
+.filter-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #555;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.filter-input:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+select.filter-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    cursor: pointer;
+    padding-right: 35px;
+    
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E7D32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+select.filter-input:hover {
+    border-color: #bdbdbd;
+    background-color: #fff;
+}
+
+select.filter-input option {
+    padding: 10px;
 }
 
 .price-inputs {
