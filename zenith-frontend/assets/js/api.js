@@ -63,6 +63,7 @@ export const Api = {
 
     pedidos: {
         checkout: (dados) => request('/pedidos/checkout', 'POST', dados), // {enderecoId, usarZenithPoints}
+        meusPedidos: () => request('/pedidos/meus-pedidos') 
     },
 
     avaliacoes: {

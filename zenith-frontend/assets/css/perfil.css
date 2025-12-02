@@ -1,113 +1,162 @@
-.page-title {
-    margin: 30px 0;
-    color: var(--primary-color);
-}
-
 .profile-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 30px;
-    margin: 30px 0;
+    margin: 40px auto;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .profile-sidebar {
     background: var(--white);
-    padding: 25px;
-    border-radius: 8px;
-    height: fit-content;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-align: center;
 }
 
 .profile-avatar {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: #f0f0f0;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-}
-
-.profile-info {
-    text-align: center;
-    margin-bottom: 25px;
+    font-size: 2.5rem;
+    color: #bbb;
 }
 
 .profile-name {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
 }
 
 .profile-email {
-    color: var(--text-light);
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
 }
 
 .profile-points {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
 }
 
 .nav-menu {
     list-style: none;
+    text-align: left;
+    margin-top: 10px;
 }
 
 .nav-menu li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .nav-menu a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 12px 15px;
     text-decoration: none;
-    color: var(--text-dark);
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    color: #555;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
 }
 
-.nav-menu a:hover,
+.nav-menu a:hover {
+    background-color: #f5f5f5;
+    color: var(--primary-color);
+}
+
 .nav-menu a.active {
-    background: var(--primary-color);
-    color: white;
+    background-color: #e8f5e9;
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
 .profile-content {
     background: var(--white);
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    min-height: 400px;
 }
 
-.section-title {
-    margin-bottom: 25px;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.form-group {
+.order-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
     margin-bottom: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.form-label {
-    display: block;
-    margin-bottom: 8px;
+.order-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.order-id {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-right: 10px;
+}
+
+.order-date {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.order-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
-.form-input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
+.order-body {
+    margin-bottom: 15px;
 }
 
-.btn-save {
-    padding: 12px 30px;
-    font-size: 1rem;
+.order-items {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.order-total {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-top: 10px;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }

@@ -5,63 +5,158 @@
     <title>Minha Conta - Zenith</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <script type="module" src="../assets/js/header.js"></script>
     <header>
         <div class="container">
             <nav>
-                <button id="btnVoltar" class="btn-icon-back" title="Voltar">⬅</button>
-                <div class="logo">
-                    <a href="home.html" style="text-decoration: none; color: inherit;">
-                        <h1>Zenith</h1>
-                    </a>
-                </div>
-                
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Procurar produtos...">
-                    <button id="btnBuscar">Buscar</button>
-                </div>
-                
-                <div class="user-actions" id="menuUsuario">
+                <div style="display:flex; align-items:center; gap:15px">
+                    <button id="btnVoltar" class="btn-icon-back" title="Voltar">⬅</button>
+                    <div class="logo">
+                        <a href="home.html" style="text-decoration: none; color: inherit;">
+                            <h1>Zenith</h1>
+                        </a>
                     </div>
+                </div>
+                
+                <div class="user-actions" id="menuUsuario"></div>
             </nav>
         </div>
     </header>
 
     <main class="container profile-container">
-        <div class="profile-header">
-            <div class="avatar">👤</div>
-            <div>
-                <h2 id="userName">Carregando...</h2>
-                <p id="userEmail">...</p>
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
             </div>
-            <div class="points-card">
-                <span style="font-size:2rem">💎</span>
-                <div>
-                    <h3>Zenith Points</h3>
-                    <p id="userPoints" style="font-size:1.5rem; font-weight:bold; color:var(--primary-color)">0</p>
+            
+            <div class="profile-info">
+                <h2 id="userName" class="profile-name">Carregando...</h2>
+                <p id="userEmail" class="profile-email">...</p>
+            </div>
+
+            <div class="profile-points">
+                <div style="font-size: 0.9rem; opacity: 0.9;">MEUS PONTOS</div>
+                <div style="font-size: 2.2rem; font-weight: bold; margin: 5px 0;">
+                    💎 <span id="userPoints">0</span>
+                </div>
+                <small>Use no checkout para descontos!</small>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a href="#" class="active">
+                        <i class="fas fa-box-open" style="margin-right:10px"></i> Meus Pedidos
+                    </a>
+                </li>
+                <li>
+                    <a href="cadastro-endereco.html">
+                        <i class="fas fa-map-marker-alt" style="margin-right:10px"></i> Novo Endereço
+                    </a>
+                </li>
+                <li style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;">
+                    <a href="#" id="btnSairSidebar" style="color: #d32f2f;">
+                        <i class="fas fa-sign-out-alt" style="margin-right:10px"></i> Sair
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <section class="profile-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 25px;">
+                <h2 class="section-title" style="margin-bottom:0; border:none;">📦 Histórico de Pedidos</h2>
+                <button onclick="carregarPedidos()" class="btn btn-sm btn-outline" title="Atualizar"><i class="fas fa-sync-alt"></i></button>
+            </div>
+
+            <div id="listaPedidos">
+                <div style="text-align:center; padding: 40px; color:#888;">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <p style="margin-top:10px">Buscando seus pedidos...</p>
                 </div>
             </div>
-        </div>
-
-        <div class="orders-section">
-            <h3>Meus Pedidos Recentes</h3>
-            <p style="color:#777">Funcionalidade de histórico em desenvolvimento.</p>
-        </div>
+        </section>
     </main>
 
     <script type="module">
         import { Auth } from '../assets/js/auth.js';
-        import { $ } from '../assets/js/utils.js';
+        import { Api } from '../assets/js/api.js';
+        import { $, formatarMoeda, formatarData } from '../assets/js/utils.js';
 
         if (!Auth.isLogado()) window.location.href = 'tela_login.html';
 
         const user = Auth.getDadosUsuario();
         $('#userName').innerText = user.sub;
-        $('#userEmail').innerText = user.sub; 
+        $('#userEmail').innerText = user.email || user.sub; 
         
-        $('#btnSair').addEventListener('click', Auth.logout);
+        $('#btnSairSidebar').addEventListener('click', (e) => {
+            e.preventDefault();
+            Auth.logout();
+        });
+
+        window.carregarPedidos = async function() {
+            const container = $('#listaPedidos');
+            container.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>';
+
+            try {
+                const pedidos = await Api.pedidos.meusPedidos(); 
+                
+                if(!pedidos || pedidos.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align:center; padding: 40px; color:#777; border: 2px dashed #eee; border-radius:10px;">
+                            <i class="fas fa-shopping-basket" style="font-size:3rem; margin-bottom:15px; color:#ddd;"></i>
+                            <p>Você ainda não fez nenhum pedido.</p>
+                            <a href="home.html" class="btn btn-primary" style="margin-top:15px">Ir às Compras</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = pedidos.map(p => {
+                    let statusColor = '#666';
+                    let statusBg = '#eee';
+                    if(p.status === 'ENTREGUE') { statusColor = '#2e7d32'; statusBg = '#e8f5e9'; }
+                    if(p.status === 'PENDENTE') { statusColor = '#f57c00'; statusBg = '#fff3e0'; }
+
+                    const resumoItens = p.itens.map(i => `${i.quantidade}x ${i.nomeProduto}`).join(', ');
+
+                    return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <span class="order-id">Pedido #${p.id}</span>
+                                <span class="order-date">${formatarData(p.data)}</span>
+                            </div>
+                            <span class="order-status" style="color:${statusColor}; background:${statusBg}">
+                                ${p.status}
+                            </span>
+                        </div>
+                        <div class="order-body">
+                            <p class="order-items"><strong>Itens:</strong> ${resumoItens}</p>
+                            <p class="order-total">Total: ${formatarMoeda(p.valorTotal)}</p>
+                        </div>
+                        <div class="order-footer">
+                            <button class="btn btn-sm btn-outline" onclick="alert('Detalhes do pedido #${p.id} em breve!')">Ver Detalhes</button>
+                            ${p.status === 'ENTREGUE' ? `<button class="btn btn-sm btn-primary" onclick="window.location.href='home.html'">Avaliar Produtos</button>` : ''}
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = `
+                    <div style="color:#d32f2f; text-align:center;">
+                        <p>Erro ao carregar seus pedidos.</p>
+                        <small>${e.message}</small>
+                    </div>
+                `;
+            }
+        };
+
+        carregarPedidos();
+        
     </script>
-    <script type="module" src="../assets/js/header.js"></script>
 </body>
 </html>

@@ -142,4 +142,13 @@ public class PedidoService {
 
         return new PedidoDTO(pedidoSalvo);
    }
+
+   @Transactional(readOnly = true)
+    public List<PedidoDTO> listarPedidosPorCliente(Integer clienteId) {
+        List<Pedido> pedidos = pedidoRepository.findByClienteId(clienteId);
+        
+        return pedidos.stream()
+                .map(PedidoDTO::new)
+                .collect(Collectors.toList());
+    }
 }
