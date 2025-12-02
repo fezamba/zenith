@@ -7,7 +7,6 @@ if (!Auth.isLogado() || !Auth.temPermissao('ADMIN')) {
     window.location.href = 'home.html';
 }
 
-// Elementos
 const listaVendedores = $('#listaVendedores');
 const listaSelos = $('#listaSelos');
 const listaCategorias = $('#listaCategorias');
@@ -94,14 +93,114 @@ async function carregarSelos() {
 }
 
 async function carregarCategorias() {
-    const cats = await Api.produtos.listarCategorias();
-    listaCategorias.innerHTML = cats.map(c => `
-        <div class="cat-item">
-            <span>${c.nome}</span>
-            <span class="badge-status ${c.status === 'ATIVO' ? 'status-ativo' : 'status-inativo'}">${c.status}</span>
-        </div>
-    `).join('');
+    try {
+        const cats = await Api.admin.categorias(); 
+        
+        listaCategorias.innerHTML = cats.map(c => {
+            const isAtivo = c.status === 'ATIVO';
+            
+            return `
+            <div class="cat-item" style="
+                display: flex; 
+                flex-wrap: wrap; 
+                justify-content: space-between; 
+                align-items: center; 
+                gap: 10px; 
+                margin-bottom: 10px; 
+                padding: 15px; 
+                border: 1px solid #eee; 
+                border-radius: 8px; 
+                background-color: ${isAtivo ? '#fff' : '#f9f9f9'}; /* Fundo levemente cinza se inativo */
+                opacity: ${isAtivo ? '1' : '0.8'};
+            ">
+                <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;">
+                    <strong style="font-size: 1.05rem; color: #333; word-break: break-word;">
+                        ${c.nome}
+                    </strong>
+                    
+                    <span style="
+                        font-size: 0.75rem; 
+                        padding: 3px 8px; 
+                        border-radius: 4px; 
+                        font-weight: 700;
+                        background: ${isAtivo ? '#e8f5e9' : '#ffebee'}; 
+                        color: ${isAtivo ? '#2e7d32' : '#c62828'};
+                        text-transform: uppercase;
+                        white-space: nowrap;
+                    ">
+                        ${c.status}
+                    </span>
+                </div>
+                
+                <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                    <button class="btn btn-outline" 
+                            style="padding: 5px 10px; display: flex; align-items: center; justify-content: center; min-width: 40px;" 
+                            onclick="editarCategoria(${c.id}, '${c.nome}')" 
+                            title="Editar">
+                        ✏️
+                    </button>
+                    
+                    ${isAtivo 
+                        ? `<button class="btn btn-outline" 
+                                style="padding: 5px 10px; color: #d32f2f; border-color: #d32f2f; display: flex; align-items: center; justify-content: center; min-width: 40px;" 
+                                onclick="removerCategoria(${c.id})" 
+                                title="Desativar">
+                            🗑️
+                           </button>`
+                        : `<button class="btn btn-outline" 
+                                style="padding: 5px 10px; color: #2e7d32; border-color: #2e7d32; display: flex; align-items: center; justify-content: center; min-width: 40px;" 
+                                onclick="ativarCategoria(${c.id})" 
+                                title="Reativar">
+                            ✅
+                           </button>`
+                    }
+                </div>
+            </div>
+            `;
+        }).join('');
+
+    } catch (e) {
+        console.error(e);
+        listaCategorias.innerHTML = '<p style="color: #666;">Erro ao carregar categorias.</p>';
+    }
 }
+
+window.editarCategoria = async (id, nomeAtual) => {
+    const novoNome = prompt("Novo nome da categoria:", nomeAtual);
+    if (novoNome && novoNome !== nomeAtual) {
+        try {
+            await Api.admin.atualizarCategoria(id, { nome: novoNome });
+            alert('Categoria atualizada!');
+            carregarCategorias();
+        } catch (e) {
+            alert('Erro: ' + e.message);
+        }
+    }
+};
+
+window.removerCategoria = async (id) => {
+    if (confirm("Tem certeza que deseja desativar esta categoria?")) {
+        try {
+            await Api.admin.removerCategoria(id);
+            alert('Categoria desativada!');
+            carregarCategorias();
+        } catch (e) {
+            alert('Erro: ' + e.message);
+        }
+    }
+};
+
+window.ativarCategoria = async (id) => {
+    if (confirm("Deseja reativar esta categoria?")) {
+        try {
+            await Api.admin.ativarCategoria(id);
+            alert('Categoria reativada com sucesso!');
+            carregarCategorias();
+        } catch (e) {
+            alert('Erro: ' + e.message);
+        }
+    }
+};
 
 async function criarCategoria() {
     const nome = $('#novaCategoriaNome').value;

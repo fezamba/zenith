@@ -91,7 +91,12 @@ export const Api = {
         aprovarSelo: (id, status) => request(`/admin/selos/produtos/${id}/status`, 'PATCH', { novoStatus: status }),
         
         categorias: () => request('/admin/categorias'),
-        criarCategoria: (cat) => request('/admin/categorias', 'POST', cat)
+        criarCategoria: (cat) => request('/admin/categorias', 'POST', cat),
+
+        atualizarCategoria: (id, dados) => request(`/admin/categorias/${id}`, 'PUT', dados),
+        removerCategoria: (id) => request(`/admin/categorias/${id}`, 'DELETE'),
+
+        ativarCategoria: (id) => request(`/admin/categorias/${id}/ativar`, 'PATCH')
     },
 
     enderecos: {

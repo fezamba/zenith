@@ -76,4 +76,10 @@ public class AdminController {
         adminService.desativarCategoria(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/categorias/{id}/ativar")
+    public ResponseEntity<Void> ativarCategoria(@PathVariable Integer id) {
+        adminService.ativarCategoria(id);
+        return ResponseEntity.noContent().build();
+    }
 }

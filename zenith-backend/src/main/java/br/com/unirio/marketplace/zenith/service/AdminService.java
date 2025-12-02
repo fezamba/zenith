@@ -113,4 +113,13 @@ public class AdminService {
         categoria.setStatus("INATIVO");
         categoriaRepository.save(categoria);
     }
+
+    @Transactional
+    public void ativarCategoria(Integer categoriaId) {
+        Categoria categoria = categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria com ID " + categoriaId + " não encontrada."));
+        
+        categoria.setStatus("ATIVO");
+        categoriaRepository.save(categoria);
+    }
 }
