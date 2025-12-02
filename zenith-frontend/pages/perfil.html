@@ -117,9 +117,23 @@
                     let statusColor = '#666';
                     let statusBg = '#eee';
                     if(p.status === 'ENTREGUE') { statusColor = '#2e7d32'; statusBg = '#e8f5e9'; }
-                    if(p.status === 'PENDENTE') { statusColor = '#f57c00'; statusBg = '#fff3e0'; }
+                    else if(p.status === 'PENDENTE') { statusColor = '#f57c00'; statusBg = '#fff3e0'; }
+                    else if(p.status === 'ENVIADO') { statusColor = '#1976d2'; statusBg = '#e3f2fd'; }
 
-                    const resumoItens = p.itens.map(i => `${i.quantidade}x ${i.nomeProduto}`).join(', ');
+                    const itensHtml = p.itens.map(i => {
+                        const btnAvaliar = p.status === 'ENTREGUE' 
+                            ? `<a href="produto-detalhe.html?id=${i.produtoId}" class="btn-avaliar-item" title="Avaliar este produto">
+                                 ⭐ Avaliar
+                               </a>` 
+                            : '';
+                        
+                        return `
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; padding-bottom:5px; border-bottom:1px dashed #f0f0f0;">
+                                <span>${i.quantidade}x <strong>${i.nomeProduto}</strong></span>
+                                ${btnAvaliar}
+                            </div>
+                        `;
+                    }).join('');
 
                     return `
                     <div class="order-card">
@@ -132,14 +146,19 @@
                                 ${p.status}
                             </span>
                         </div>
+                        
                         <div class="order-body">
-                            <p class="order-items"><strong>Itens:</strong> ${resumoItens}</p>
-                            <p class="order-total">Total: ${formatarMoeda(p.valorTotal)}</p>
+                            <div class="order-items-list" style="margin-bottom:10px;">
+                                ${itensHtml}
+                            </div>
+                            <p class="order-total" style="text-align:right; border-top:1px solid #eee; padding-top:10px;">
+                                Total: ${formatarMoeda(p.valorTotal)}
+                            </p>
                         </div>
+                        
                         <div class="order-footer">
-                            <button class="btn btn-sm btn-outline" onclick="alert('Detalhes do pedido #${p.id} em breve!')">Ver Detalhes</button>
-                            ${p.status === 'ENTREGUE' ? `<button class="btn btn-sm btn-primary" onclick="window.location.href='home.html'">Avaliar Produtos</button>` : ''}
-                        </div>
+                            <button class="btn btn-sm btn-outline" onclick="alert('Nota fiscal e rastreio em breve!')">Detalhes</button>
+                            </div>
                     </div>
                     `;
                 }).join('');
@@ -155,6 +174,20 @@
             }
         };
 
+        async function carregarDadosUsuario() {
+            try {
+                const dados = await Api.cliente.me();
+                
+                $('#userName').innerText = dados.nome;
+                $('#userEmail').innerText = dados.email;
+                $('#userPoints').innerText = dados.zenithPoints;
+                
+            } catch (e) {
+                console.error("Erro ao carregar perfil:", e);
+            }
+        }
+
+        carregarDadosUsuario();
         carregarPedidos();
         
     </script>

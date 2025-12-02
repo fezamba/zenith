@@ -71,6 +71,10 @@ export const Api = {
         listarDoProduto: (produtoId) => request(`/avaliacoes/produto/${produtoId}`)
     },
 
+    cliente: {
+        me: () => request('/clientes/me')
+    },
+
     vendedor: {
         meusProdutos: () => request('/vendedor/produtos'),
         criarProduto: (prod) => request('/vendedor/produtos', 'POST', prod),
