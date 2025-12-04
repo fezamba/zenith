@@ -60,6 +60,9 @@ public class SecurityConfig {
 
                 .requestMatchers("/api/vendedor/**").hasRole("VENDEDOR")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                .requestMatchers("/api/clientes/me").authenticated()
+                .requestMatchers("/api/enderecos/**").authenticated()
                 
                 .anyRequest().authenticated()
             );
