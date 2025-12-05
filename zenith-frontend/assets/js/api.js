@@ -1,6 +1,6 @@
 import { Auth } from './auth.js';
 
-const API_BASE_URL = 'zenith-production-73dc.up.railway.app';
+const API_BASE_URL = 'https://zenith-production-73dc.up.railway.app';
 
 async function request(endpoint, method = 'GET', body = null) {
     const headers = {
