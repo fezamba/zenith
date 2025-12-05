@@ -48,6 +48,9 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             
             .authorizeHttpRequests(authorize -> authorize
+
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                   
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/avaliacoes/produto/**").permitAll()
@@ -75,12 +78,11 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        
+        configuration.setAllowedOrigins(Arrays.asList("https://captivating-healing-production.up.railway.app"));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        
         configuration.setAllowCredentials(true);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
