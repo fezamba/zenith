@@ -120,7 +120,7 @@ async function carregarResumo() {
 function recalcularTotal() {
     let total = valorTotalCarrinho;
     if (checkPontos.checked) {
-        elDesconto.innerText = "(Calculado no fechamento)";
+        elDesconto.innerText = "(Feature fora do escopo inicial)";
         elDesconto.style.color = "green";
     } else {
         elDesconto.innerText = "- R$ 0,00";
