@@ -115,7 +115,7 @@ function renderizarStatusSelo(prod) {
 window.desativarProduto = async (id) => {
     if(confirm("Deseja desativar este produto? Ele deixará de aparecer na loja.")) {
         try {
-            await Api.vendedor.desativarProduto(id); // Chama DELETE (que agora é soft delete)
+            await Api.vendedor.desativarProduto(id);
             carregarProdutos();
         } catch (err) {
             alert("Erro: " + err.message);
@@ -126,7 +126,7 @@ window.desativarProduto = async (id) => {
 window.ativarProduto = async (id) => {
     if(confirm("Deseja reativar a venda deste produto?")) {
         try {
-            await Api.vendedor.ativarProduto(id); // Chama PATCH
+            await Api.vendedor.ativarProduto(id);
             carregarProdutos();
         } catch (err) {
             alert("Erro: " + err.message);

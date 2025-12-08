@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     
-    // Header simples
     $('#menuUsuario').innerHTML = `<span style="font-weight:bold">Admin</span>`;
 
     try {
