@@ -1,5 +1,6 @@
 import { Api } from './api.js';
 import { $ } from './utils.js';
+import { validarCEP } from './utils.js';
 
 export function setupModalEndereco(aoSalvarSucesso) {
     const modal = $('#modalCadastroEndereco');
@@ -26,11 +27,18 @@ export function setupModalEndereco(aoSalvarSucesso) {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const cepInput = $('#modal-cep');
+        
+        if (!validarCEP(cepInput.value)) {
+            alert("CEP inválido! Use o formato 00000-000 ou apenas números.");
+            return;
+        }
         const btnSalvar = form.querySelector('button[type="submit"]');
         const textoOriginal = btnSalvar.innerText;
 
         const novoEndereco = {
-            cep: $('#modal-cep').value,
+            cep: cepInput.value,
             logradouro: $('#modal-logradouro').value,
             numero: $('#modal-numero').value,
             cidade: $('#modal-cidade').value,

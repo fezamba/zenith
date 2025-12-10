@@ -1,5 +1,6 @@
 import { Api } from './api.js';
 import { Auth } from './auth.js';
+import { validarCEP } from './utils.js';
 
 if (!Auth.isLogado()) {
     window.location.href = 'tela_login.html';
@@ -24,8 +25,15 @@ document.getElementById('formEndereco').addEventListener('submit', async (e) => 
     const btnSalvar = e.target.querySelector('button[type="submit"]');
     const textoOriginal = btnSalvar.innerText;
 
+    const cepValor = document.getElementById('cep').value;
+
+    if (!validarCEP(cepValor)) {
+        alert("CEP inválido! Use o formato 00000-000 ou apenas números.");
+        return;
+    }
+
     const endereco = {
-        cep: document.getElementById('cep').value,
+        cep: cepValor,
         logradouro: document.getElementById('logradouro').value,
         numero: document.getElementById('numero').value,
         cidade: document.getElementById('cidade').value,

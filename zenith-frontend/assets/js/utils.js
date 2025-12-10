@@ -45,5 +45,10 @@ export function validarCPF(cpf) {
     return regex.test(cpf);
 }
 
+export function validarCEP(cep) {
+    const regex = /^(\d{8}|\d{5}-\d{3})$/;
+    return regex.test(cep);
+}
+
 export const $ = (selector) => document.querySelector(selector);
 export const $$ = (selector) => document.querySelectorAll(selector);
