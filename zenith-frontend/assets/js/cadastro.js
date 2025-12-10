@@ -1,4 +1,5 @@
 import { Api } from './api.js';
+import { validarCPF } from './utils.js';
 
 const tabs = document.querySelectorAll('.tab-btn');
 const inputCpf = document.getElementById('cpf');
@@ -37,10 +38,18 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
     const nome = document.getElementById('nome').value;
     const email = document.getElementById('email').value;
     const tipo = tipoInput.value;
+    const cpfValor = document.getElementById('cpf').value;
 
     if (senha !== confirma) {
         alert("As senhas não coincidem!");
         return;
+    }
+
+    if (tipo === 'cliente') {
+        if (!validarCPF(cpfValor)) {
+            alert("CPF inválido! Por favor, verifique os números digitados.");
+            return;
+        }
     }
 
     const btn = document.getElementById('btnCadastrar');
@@ -49,14 +58,12 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
 
     try {
         if (tipo === 'cliente') {
-            const cpf = document.getElementById('cpf').value;
-            await Api.auth.registrarCliente({ nome, email, senha, cpf });
+            await Api.auth.registrarCliente({ nome, email, senha, cpf: cpfValor });
             alert("Cadastro realizado com sucesso! Faça login para continuar.");
             window.location.href = 'tela_login.html';
         } else {
             const cnpj = document.getElementById('cnpj').value;
             await Api.auth.registrarVendedor({ nome, email, senha, cnpj });
-            // RN09: Vendedor precisa de aprovação
             alert("Solicitação enviada! Sua conta de vendedor está pendente de aprovação pelo administrador.");
             window.location.href = 'tela_login.html';
         }
