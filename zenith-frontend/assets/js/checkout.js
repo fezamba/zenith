@@ -1,6 +1,7 @@
 import { Api } from './api.js';
 import { Auth } from './auth.js';
 import { formatarMoeda, $ } from './utils.js';
+import { setupModalEndereco } from './modal-endereco.js';
 
 const listaResumo = $('#listaResumoItens');
 const elSubtotal = $('#subtotalVal');
@@ -26,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     checkPontos.addEventListener('change', recalcularTotal);
     btnConfirmar.addEventListener('click', finalizarPedido);
+
+    setupModalEndereco(() => {
+        carregarEnderecos();
+    });
 });
 
 function setupDropdownEvents() {

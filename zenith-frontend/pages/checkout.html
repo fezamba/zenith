@@ -29,9 +29,7 @@
                 
             <div class="checkout-card" style="overflow: visible;"> <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <h3>📍 Endereço de Entrega</h3>
-                    <a href="cadastro-endereco.html" class="btn btn-sm btn-outline" style="text-decoration:none;">
-                        + Novo
-                    </a>
+                    <button id="btnAbrirModalEndereco" class="btn btn-sm btn-outline">+ Novo</button>
                 </div>
 
                 <div class="form-group" style="position: relative;">
@@ -119,7 +117,43 @@
             <button onclick="window.location.href='home.html'" class="btn btn-primary">Voltar à Loja</button>
         </div>
     </div>
+    
+    <div id="modalCadastroEndereco" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="text-align: left; max-width: 400px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3>Novo Endereço</h3>
+                <span id="btnFecharModal" style="cursor:pointer; font-size:1.5rem;">&times;</span>
+            </div>
 
+            <form id="formModalEndereco">
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" id="modal-cep" placeholder="00000-000" required style="width:100%; padding:8px; margin-bottom:10px;">
+                </div>
+                <div class="form-group">
+                    <label>Logradouro</label>
+                    <input type="text" id="modal-logradouro" placeholder="Rua..." required style="width:100%; padding:8px; margin-bottom:10px;">
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Número</label>
+                        <input type="text" id="modal-numero" required style="width:100%; padding:8px; margin-bottom:10px;">
+                    </div>
+                    <div class="form-group" style="flex:2;">
+                        <label>Cidade</label>
+                        <input type="text" id="modal-cidade" required style="width:100%; padding:8px; margin-bottom:10px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Estado (UF)</label>
+                    <input type="text" id="modal-estado" placeholder="RJ" maxlength="2" required style="width:100%; padding:8px; margin-bottom:10px; text-transform:uppercase;">
+                </div>
+                <div style="text-align:right; margin-top:15px;">
+                    <button type="submit" class="btn btn-primary">Salvar Endereço</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script type="module" src="../assets/js/header.js"></script>
     <script type="module" src="../assets/js/checkout.js"></script>
 </body>
