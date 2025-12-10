@@ -135,6 +135,10 @@
             e.preventDefault();
             Auth.logout();
         });
+        
+        setupModalEndereco(() => {
+            console.log("Endereço salvo via Perfil");
+        });
 
         window.carregarPedidos = async function() {
             const container = $('#listaPedidos');
@@ -228,9 +232,6 @@
             }
         }
 
-        setupModalEndereco(() => {
-            console.log("Endereço salvo via Perfil");
-        });
         carregarDadosUsuario();
         carregarPedidos();
         
