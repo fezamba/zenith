@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!Auth.isLogado()) window.location.href = 'tela_login.html';
     
     carregarResumo();
-    carregarEnderecos();
+    // carregarEnderecos();
     setupDropdownEvents();
     
     checkPontos.addEventListener('change', recalcularTotal);
@@ -161,3 +161,8 @@ async function finalizarPedido() {
         btnConfirmar.innerText = "CONFIRMAR PEDIDO";
     }
 }
+
+window.addEventListener('pageshow', () => {
+    console.log("Página exibida, recarregando endereços...");
+    carregarEnderecos();
+});
