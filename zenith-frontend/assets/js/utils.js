@@ -45,6 +45,7 @@ export function validarCPF(cpf) {
     return regex.test(cpf);
 }
 
+// FIXME: Colocar a mesma lógica do CPF para CEP e depois no backend fazer um filtro para salvar todos no mesmo formato.
 export function validarCEP(cep) {
     const regex = /^(\d{8}|\d{5}-\d{3})$/;
     return regex.test(cep);
