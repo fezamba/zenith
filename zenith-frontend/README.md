@@ -8,7 +8,7 @@ Interface web para a plataforma de e-commerce Zenith, focada em sustentabilidade
   * **CSS3:** Design responsivo, uso de CSS Grid/Flexbox e Variáveis CSS para o tema.
   * **JavaScript:** Arquitetura modular para separação de responsabilidades.
   * **Fetch API:** Comunicação assíncrona com o Backend RESTful.
-  * **JWT** Gestão de autenticação e sessões via localStorage.
+  * **JWT:** Gestão de autenticação e sessões via localStorage.
 
 ## Funcionalidades
 
