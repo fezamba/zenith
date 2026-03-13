@@ -30,8 +30,8 @@ Antes de começar, certifique-se de que tem as seguintes ferramentas instaladas 
 
 1.  **JDK 21** (ou superior).
 2.  **Maven 3.9** (ou superior).
-3.  **MySQL Server** (a correr na porta `3306`).
-4.  **MongoDB Community Server** (a correr na porta `27017`).
+3.  **MySQL* * (a correr na porta `3306`).
+4.  **MongoDB** (a correr na porta `27017`).
 
 ## Configuração
 
@@ -72,7 +72,7 @@ Altere o `zenith.jwt.secret` para uma *string* longa e segura. Este segredo é u
 
 ```properties
 # JWT
-zenith.jwt.secret=SUA_CHAVE_SECRETA_MUITO_LONGA_E_SEGURA_DEVE_SER_COLOCADA_AQUI
+zenith.jwt.secret=SUA_SALT_DO_TOKEN_JWT
 zenith.jwt.expiration-ms=3600000
 ```
 
